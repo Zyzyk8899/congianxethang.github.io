@@ -18,9 +18,27 @@
         --secondary: #0f766e;
         --success: #16a34a;
         --warning: #f59e0b;
-        --code-bg: #0f172a;
+        --code-bg: #0b1120;
         --code-text: #dbeafe;
         --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      }
+
+      body.dark {
+        --bg: #020817;
+        --panel: #0f172a;
+        --panel-soft: #111827;
+        --surface: #0b1120;
+        --text: #e2e8f0;
+        --muted: #94a3b8;
+        --line: #1e293b;
+        --primary: #60a5fa;
+        --primary-soft: rgba(96, 165, 250, 0.12);
+        --secondary: #2dd4bf;
+        --success: #4ade80;
+        --warning: #fbbf24;
+        --code-bg: #020817;
+        --code-text: #dbeafe;
+        --shadow: 0 12px 28px rgba(2, 8, 23, 0.7);
       }
 
       * {
@@ -45,6 +63,10 @@
         text-decoration: none;
       }
 
+      button, input {
+        font: inherit;
+      }
+
       .app {
         min-height: 100vh;
         display: flex;
@@ -54,15 +76,19 @@
       .topbar {
         position: sticky;
         top: 0;
-        z-index: 20;
-        height: 70px;
-        background: rgba(255, 255, 255, 0.92);
+        z-index: 30;
+        height: 72px;
+        background: rgba(255,255,255,0.88);
         border-bottom: 1px solid var(--line);
         backdrop-filter: blur(10px);
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 24px;
+        padding: 0 22px;
+      }
+
+      body.dark .topbar {
+        background: rgba(15, 23, 42, 0.9);
       }
 
       .brand-wrap {
@@ -72,25 +98,26 @@
       }
 
       .logo {
-        width: 36px;
-        height: 36px;
+        width: 38px;
+        height: 38px;
         border-radius: 12px;
         background: linear-gradient(135deg, var(--primary), #60a5fa);
-        color: #fff;
-        font-weight: 800;
+        color: white;
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 10px 18px rgba(37, 99, 235, 0.2);
+        font-weight: 800;
+        box-shadow: 0 10px 18px rgba(37, 99, 235, 0.25);
       }
 
       .brand-text {
-        font-weight: 800;
         font-size: 1.05rem;
+        font-weight: 800;
       }
 
       .brand-sub {
         display: block;
+        margin-top: 1px;
         font-size: 11px;
         color: var(--muted);
         font-weight: 500;
@@ -104,44 +131,88 @@
       }
 
       .chip {
-        background: #fff;
-        border: 1px solid var(--line);
+        background: var(--panel);
         color: var(--muted);
+        border: 1px solid var(--line);
         border-radius: 999px;
         padding: 8px 12px;
-        font-weight: 600;
+        font-weight: 700;
         font-size: 12px;
+      }
+
+      .icon-btn {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        color: var(--text);
+        border-radius: 10px;
+        padding: 9px 10px;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .icon-btn:hover {
+        transform: translateY(-1px);
       }
 
       .main {
         display: grid;
-        grid-template-columns: 330px minmax(0, 1fr);
-        min-height: calc(100vh - 70px);
+        grid-template-columns: 320px minmax(0, 1fr);
+        min-height: calc(100vh - 72px);
       }
 
       .sidebar {
-        border-right: 1px solid var(--line);
         background: var(--panel);
-        padding: 20px 16px;
+        border-right: 1px solid var(--line);
+        padding: 18px 16px;
         overflow-y: auto;
       }
 
+      .sidebar-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
       .sidebar-title {
-        margin: 0 0 14px 0;
+        margin: 0;
         font-size: 12px;
+        font-weight: 800;
         letter-spacing: 0.12em;
         text-transform: uppercase;
         color: #64748b;
-        font-weight: 800;
+      }
+
+      .sidebar-search {
+        position: relative;
+        margin-bottom: 16px;
+      }
+
+      .sidebar-search input {
+        width: 100%;
+        border: 1px solid var(--line);
+        background: var(--panel-soft);
+        color: var(--text);
+        border-radius: 12px;
+        padding: 10px 12px 10px 38px;
+        outline: none;
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+        font-size: 14px;
       }
 
       .chapter {
         background: var(--panel);
-        margin-bottom: 14px;
         border: 1px solid var(--line);
         border-radius: 16px;
+        margin-bottom: 14px;
         overflow: hidden;
-        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.02);
       }
 
       .chapter-header {
@@ -154,6 +225,7 @@
         padding: 14px 12px;
         text-align: left;
         cursor: pointer;
+        color: var(--text);
       }
 
       .chapter-main {
@@ -161,6 +233,7 @@
         align-items: center;
         gap: 10px;
         min-width: 0;
+        flex: 1;
       }
 
       .chapter-num {
@@ -169,7 +242,7 @@
         border-radius: 10px;
         background: var(--primary-soft);
         color: var(--primary);
-        display: inline-flex;
+        display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 800;
@@ -186,11 +259,10 @@
         font-size: 13px;
         line-height: 1.5;
         font-weight: 700;
-        color: var(--text);
       }
 
       .chapter-sub {
-        margin-top: 3px;
+        margin-top: 2px;
         font-size: 10px;
         color: var(--muted);
       }
@@ -198,6 +270,7 @@
       .caret {
         color: var(--muted);
         font-size: 14px;
+        flex-shrink: 0;
       }
 
       .chapter-body {
@@ -213,6 +286,10 @@
         margin-bottom: 10px;
       }
 
+      body.dark .article {
+        background: rgba(15, 23, 42, 0.7);
+      }
+
       .article-head {
         display: flex;
         justify-content: space-between;
@@ -225,7 +302,6 @@
         margin: 0;
         font-size: 13px;
         line-height: 1.5;
-        color: var(--text);
       }
 
       .tag {
@@ -235,6 +311,11 @@
         border-radius: 6px;
         padding: 4px 6px;
         white-space: nowrap;
+      }
+
+      body.dark .tag {
+        background: #1e293b;
+        color: #cbd5e1;
       }
 
       .fix-text,
@@ -272,9 +353,9 @@
       }
 
       .keypoints {
-        border-top: 1px dashed var(--line);
         margin-top: 12px;
         padding-top: 12px;
+        border-top: 1px dashed var(--line);
       }
 
       .keypoints-title {
@@ -326,8 +407,8 @@
       }
 
       .codehead {
-        background: #0b1220;
-        border-bottom: 1px solid rgba(255,255,255,0.12);
+        background: rgba(15, 23, 42, 0.95);
+        border-bottom: 1px solid rgba(255,255,255,0.09);
         color: #cbd5e1;
         font-size: 10px;
         font-weight: 700;
@@ -341,10 +422,10 @@
       .codebody {
         margin: 0;
         padding: 14px;
+        background: var(--code-bg);
+        color: var(--code-text);
         font-size: 12px;
         line-height: 1.7;
-        color: var(--code-text);
-        background: var(--code-bg);
         white-space: pre-wrap;
         overflow-x: auto;
         overflow-wrap: anywhere;
@@ -353,7 +434,7 @@
 
       .workspace {
         background: var(--bg);
-        padding: 30px 30px 40px 30px;
+        padding: 28px 26px 40px;
       }
 
       .workspace-panel {
@@ -363,44 +444,64 @@
         border: 1px solid var(--line);
         border-radius: 22px;
         box-shadow: var(--shadow);
-        padding: 28px 24px;
+        overflow: hidden;
       }
 
-      .workspace-panel h1 {
-        margin: 0 0 18px 0;
+      .tabbar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        padding: 16px 18px 0;
+      }
+
+      .tab {
+        border: 1px solid var(--line);
+        background: var(--panel-soft);
+        color: var(--muted);
+        border-radius: 10px;
+        padding: 9px 14px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .tab.active {
+        background: var(--primary-soft);
+        color: var(--primary);
+        border-color: #bfdbfe;
+      }
+
+      .tab-panel {
+        display: none;
+        padding: 20px 18px 22px;
+      }
+
+      .tab-panel.active {
+        display: block;
+      }
+
+      .panel-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .panel-content h1 {
+        margin: 0 0 18px;
         font-size: clamp(28px, 4vw, 42px);
         line-height: 1.2;
       }
 
-      .workspace-panel p {
-        margin: 0 0 14px 0;
+      .panel-content p {
         font-size: 16px;
         line-height: 1.8;
-        color: var(--text);
-      }
-
-      .feature-box {
-        margin-top: 20px;
-        background: #f8fafc;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 20px;
-      }
-
-      .feature-box h3 {
-        margin: 0 0 12px 0;
-        font-size: 22px;
-      }
-
-      .feature-box p {
-        font-size: 15px;
+        margin: 0 0 14px;
       }
 
       .badge-row {
         display: flex;
-        gap: 10px;
+        gap: 8px;
+        margin-bottom: 16px;
         flex-wrap: wrap;
-        margin: 18px 0 6px 0;
       }
 
       .badge {
@@ -408,9 +509,30 @@
         color: var(--primary);
         border: 1px solid #bfdbfe;
         border-radius: 999px;
-        padding: 7px 12px;
         font-size: 12px;
         font-weight: 700;
+        padding: 7px 12px;
+      }
+
+      .feature-box {
+        margin-top: 22px;
+        background: #f8fafc;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 20px;
+      }
+
+      body.dark .feature-box {
+        background: rgba(15,23,42,0.7);
+      }
+
+      .feature-box h3 {
+        margin: 0 0 10px 0;
+        font-size: 20px;
+      }
+
+      .hidden {
+        display: none !important;
       }
 
       @media (max-width: 900px) {
@@ -425,10 +547,6 @@
 
         .workspace {
           padding: 18px 14px 30px 14px;
-        }
-
-        .workspace-panel {
-          padding: 22px 18px;
         }
       }
     </style>
@@ -447,15 +565,24 @@
         <div class="top-actions">
           <div class="chip">Ngôn ngữ C/C++</div>
           <div class="chip">9 chương</div>
+          <button id="themeToggle" class="icon-btn" aria-label="Dark mode">🌙</button>
+          <button id="drawerToggle" class="icon-btn" aria-label="Open drawer">☰</button>
         </div>
       </header>
 
       <div class="main">
-        <aside class="sidebar">
-          <h2 class="sidebar-title">Lý thuyết</h2>
+        <aside id="drawer" class="sidebar">
+          <div class="sidebar-header">
+            <h2 class="sidebar-title">Lý thuyết</h2>
+          </div>
+
+          <div class="sidebar-search">
+            <span class="search-icon">⌕</span>
+            <input id="searchInput" type="text" placeholder="Tìm khái niệm..." />
+          </div>
 
           <div class="chapter">
-            <button class="chapter-header">
+            <button class="chapter-header" data-target="chap1">
               <div class="chapter-main">
                 <div class="chapter-num">1</div>
                 <div class="chapter-meta">
@@ -466,7 +593,7 @@
               <span class="caret">▾</span>
             </button>
 
-            <div class="chapter-body">
+            <div class="chapter-body" id="chap1">
               <div class="article">
                 <div class="article-head">
                   <h5>1.1 Khái niệm ngôn ngữ C</h5>
@@ -504,7 +631,7 @@ int main() {
           </div>
 
           <div class="chapter">
-            <button class="chapter-header">
+            <button class="chapter-header" data-target="chap2">
               <div class="chapter-main">
                 <div class="chapter-num">2</div>
                 <div class="chapter-meta">
@@ -515,7 +642,7 @@ int main() {
               <span class="caret">▾</span>
             </button>
 
-            <div class="chapter-body">
+            <div class="chapter-body" id="chap2">
               <div class="article">
                 <div class="article-head">
                   <h5>2.1 Kiểu số nguyên và thực</h5>
@@ -555,7 +682,7 @@ int main() {
           </div>
 
           <div class="chapter">
-            <button class="chapter-header">
+            <button class="chapter-header" data-target="chap3">
               <div class="chapter-main">
                 <div class="chapter-num">3</div>
                 <div class="chapter-meta">
@@ -565,33 +692,85 @@ int main() {
               </div>
               <span class="caret">▾</span>
             </button>
+
+            <div class="chapter-body" id="chap3">
+              <div class="article">
+                <div class="article-head">
+                  <h5>3.1 if, else, switch</h5>
+                  <span class="tag">UTT p.47</span>
+                </div>
+
+                <div class="content fix-text">
+                  <p>Điều kiện là cơ sở để chương trình có thể rẽ nhánh theo trạng thái của biến, dữ liệu đầu vào hoặc điều kiện nghiệp vụ.</p>
+                  <p>switch thường thích hợp với các trường hợp lựa chọn nhiều nhánh rõ ràng, còn if/else được dùng linh hoạt hơn trong các biểu thức logic phức tạp.</p>
+                </div>
+
+                <div class="keypoints">
+                  <p class="keypoints-title">Điểm cốt lõi</p>
+                  <ul>
+                    <li><span class="dot">✓</span><span>if/else xử lý điều kiện.</span></li>
+                    <li><span class="dot">✓</span><span>switch xử lý nhiều nhánh rõ ràng.</span></li>
+                    <li><span class="dot">✓</span><span>Không nên lồng quá sâu nếu không cần thiết.</span></li>
+                  </ul>
+                </div>
+
+                <div class="codebox">
+                  <div class="codehead">
+                    <span>Ví dụ</span>
+                    <span>branch.c</span>
+                  </div>
+                  <pre class="codebody">#include &lt;stdio.h&gt;
+
+int main() {
+    int score = 70;
+    if (score >= 80) {
+        printf("Gioi\\n");
+    } else if (score >= 60) {
+        printf("Kha\\n");
+    } else {
+        printf("Yeu\\n");
+    }
+    return 0;
+}</pre>
+                </div>
+              </div>
+            </div>
           </div>
         </aside>
 
         <main class="workspace">
-          <div class="workspace-panel fix-text">
-            <div class="badge-row">
-              <span class="badge">Học C</span>
-              <span class="badge">Cấu trúc dữ liệu</span>
-              <span class="badge">Lập trình hệ thống</span>
+          <div class="workspace-panel">
+            <div class="tabbar">
+              <button class="tab active" data-tab="practice">Luyện tập</button>
+              <button class="tab" data-tab="exam">Thi thử</button>
+              <button class="tab" data-tab="flashcards">Flashcards</button>
+              <button class="tab" data-tab="essays">Tự luận</button>
             </div>
 
-            <h1>Ngôn ngữ lập trình C/C++</h1>
-
-            <p>C là một ngôn ngữ lập trình có cấu trúc, hiệu suất cao, và rất quan trọng trong các môn học kỹ thuật. Trong quá trình học, sinh viên cần nắm rõ từng khái niệm như kiểu dữ liệu, vòng lặp, điều kiện, hàm, mảng, con trỏ, cấu trúc và thao tác tệp.</p>
-
-            <p>Điểm đặc biệt của C là khả năng làm việc ở tầng thấp, cho phép lập trình điều khiển bộ nhớ, xử lý kernel, driver, và phần mềm nhúng. Tuy nhiên, chính vì vậy, người học cần thận trọng trong việc quản lý biến, con trỏ và vùng nhớ.</p>
-
-            <div class="feature-box">
-              <h3>Ví dụ tổng hợp</h3>
-              <p>Đoạn mã dưới đây minh họa cách sử dụng if, for và hàm trong C để tính tổng số chẵn từ 1 tới 10:</p>
-
-              <div class="codebox" style="margin-top: 18px;">
-                <div class="codehead">
-                  <span>Ví dụ</span>
-                  <span>sum_even.c</span>
+            <div class="tab-panel active" data-panel="practice">
+              <div class="panel-content fix-text">
+                <div class="badge-row">
+                  <span class="badge">Cơ bản</span>
+                  <span class="badge">Mảng</span>
+                  <span class="badge">Hàm</span>
                 </div>
-                <pre class="codebody">#include &lt;stdio.h&gt;
+
+                <h1>Ngôn ngữ lập trình C/C++</h1>
+
+                <p>C là ngôn ngữ lập trình có tính cấu trúc, hiệu suất cao và rất quan trọng trong các môn kỹ thuật. Người học cần thành thạo lập trình tuần tự, điều kiện, vòng lặp, hàm, mảng, con trỏ và thao tác tệp.</p>
+
+                <p>Điểm đặc biệt của C là khả năng làm việc ở tầng thấp, cho phép điều khiển bộ nhớ và xây dựng các ứng dụng hệ thống, trình điều khiển và phần mềm nhúng. Vì vậy, cần chú ý đến định dạng biến, con trỏ, và logic rẽ nhánh.</p>
+
+                <div class="feature-box">
+                  <h3>Ví dụ tổng hợp</h3>
+                  <p>Đoạn mã dưới đây minh họa cách tính tổng số chẵn từ 1 tới n:</p>
+
+                  <div class="codebox" style="margin-top: 18px;">
+                    <div class="codehead">
+                      <span>Ví dụ</span>
+                      <span>sum_even.c</span>
+                    </div>
+                    <pre class="codebody">#include &lt;stdio.h&gt;
 
 int sumEven(int n) {
     int total = 0;
@@ -608,13 +787,127 @@ int main() {
     printf("Tong so chan tu 1 den %d la: %d\\n", x, sumEven(x));
     return 0;
 }</pre>
+                  </div>
+                </div>
+
+                <p>Để học tốt C, nên đọc bài từng chương, viết lại ví dụ bằng tay và làm nhiều bài tập thực hành. Mỗi thao tác sẽ giúp bạn làm quen với cú pháp, tính đúng sai, và kỹ năng debug.</p>
               </div>
             </div>
 
-            <p>Để học tốt C, bạn nên đọc bài từng chương, làm bài tập thực hành, và viết lại các ví dụ bằng tay để hiểu đúng bản chất của ngôn ngữ. Một lưu ý quan trọng là C rất nhạy với lỗi con trỏ và định dạng dữ liệu.</p>
+            <div class="tab-panel" data-panel="exam">
+              <div class="panel-content fix-text">
+                <div class="badge-row">
+                  <span class="badge">45 câu</span>
+                  <span class="badge">90 phút</span>
+                  <span class="badge">Thử năng lực</span>
+                </div>
+
+                <h1>Thi thử lập trình C</h1>
+
+                <p>Trong phần thi thử, bạn sẽ làm quen với dạng câu hỏi về kiểu dữ liệu, phạm vi biến, vòng lặp, mảng, con trỏ và tối ưu code. Mục tiêu là kiểm tra khả năng đọc hiểu logic và viết mã đúng trình tự.</p>
+
+                <p>Để đạt hiệu quả, hãy luyện tập từng phần nhỏ trước khi thi. Đặc biệt, bạn nên tập trung vào việc kiểm tra điều kiện rẽ nhánh, vòng lặp và cách sử dụng con trỏ đúng chuẩn.</p>
+
+                <div class="feature-box">
+                  <h3>Ví dụ câu hỏi</h3>
+                  <p>Hãy xác định đầu ra của đoạn code sau:</p>
+
+                  <div class="codebox" style="margin-top: 18px;">
+                    <div class="codehead">
+                      <span>Câu hỏi</span>
+                      <span>Q1</span>
+                    </div>
+                    <pre class="codebody">#include &lt;stdio.h&gt;
+
+int main() {
+    int x = 5;
+    int y = 2;
+    printf("%d\\n", x / y);
+    return 0;
+}</pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel" data-panel="flashcards">
+              <div class="panel-content fix-text">
+                <div class="badge-row">
+                  <span class="badge">125 thẻ</span>
+                  <span class="badge">Ghi nhớ nhanh</span>
+                  <span class="badge">Ôn tập lặp lại</span>
+                </div>
+
+                <h1>Flashcards C/C++</h1>
+
+                <p>Flashcards giúp học viên ghi nhớ các khái niệm trọng tâm như biến, con trỏ, mảng, kiểu dữ liệu, vòng lặp, cấu trúc và cú pháp hàm. Học bằng thẻ sẽ tăng hiệu quả ôn tập và giảm nguy cơ quên.</p>
+
+                <p>Đối với người học C, cách học hiệu quả nhất là kết hợp thẻ từ khóa với ví dụ thật. Ví dụ: “Con trỏ là biến lưu địa chỉ của biến khác”, “char lưu 1 byte”, “double có độ chính xác cao hơn float”.</p>
+              </div>
+            </div>
+
+            <div class="tab-panel" data-panel="essays">
+              <div class="panel-content fix-text">
+                <div class="badge-row">
+                  <span class="badge">32 bài</span>
+                  <span class="badge">Monaco Editor</span>
+                  <span class="badge">Bài tập thực hành</span>
+                </div>
+
+                <h1>Tự luận lập trình C</h1>
+
+                <p>Phần tự luận tập trung vào kỹ năng viết mã, giải quyết bài toán, và code theo logic rõ ràng. Bạn cần xây dựng chương trình từ đầu, xử lý đầu vào, đầu ra, kiểm tra điều kiện và chạy thử.</p>
+
+                <p>Học qua bài tự luận giúp bạn rèn tư duy thuật toán, kiểm soát lỗi, và cải thiện khả năng phân tích vấn đề theo hướng cấu trúc hơn.</p>
+              </div>
+            </div>
           </div>
         </main>
       </div>
     </div>
+
+    <script>
+      const body = document.body;
+      const themeToggle = document.getElementById('themeToggle');
+      const drawerToggle = document.getElementById('drawerToggle');
+      const drawer = document.getElementById('drawer');
+      const searchInput = document.getElementById('searchInput');
+
+      themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark');
+        themeToggle.textContent = body.classList.contains('dark') ? '☀️' : '🌙';
+      });
+
+      drawerToggle.addEventListener('click', () => {
+        drawer.classList.toggle('hidden');
+      });
+
+      document.querySelectorAll('.tab').forEach(button => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+          document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+          button.classList.add('active');
+          document.querySelector('[data-panel="' + button.dataset.tab + '"]').classList.add('active');
+        });
+      });
+
+      document.querySelectorAll('.chapter-header').forEach(button => {
+        const target = document.getElementById(button.dataset.target);
+        if (target) {
+          button.addEventListener('click', () => {
+            target.classList.toggle('hidden');
+          });
+        }
+      });
+
+      searchInput.addEventListener('input', function () {
+        const term = this.value.trim().toLowerCase();
+
+        document.querySelectorAll('.chapter').forEach(chapter => {
+          const text = chapter.textContent.toLowerCase();
+          chapter.style.display = text.includes(term) ? '' : 'none';
+        });
+      });
+    </script>
   </body>
 </html>
