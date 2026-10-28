@@ -3,97 +3,275 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Study Quiz Dashboard</title>
+    <title>Student Learning Dashboard</title>
     <style>
-      * {
-        box-sizing: border-box;
+      :root {
+        --bg: #f4f7fb;
+        --panel: #ffffff;
+        --panel-soft: #eef4ff;
+        --primary: #3164f4;
+        --primary-dark: #1d4ed8;
+        --primary-soft: #dbeafe;
+        --success: #22c55e;
+        --success-soft: #dcfce7;
+        --danger: #ef4444;
+        --danger-soft: #fee2e2;
+        --text: #10213b;
+        --muted: #53657f;
+        --line: #dfe8f3;
+        --shadow: 0 14px 30px rgba(17, 24, 39, 0.08);
       }
+
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
-        font-family: Arial, sans-serif;
-        background: #f8fafc;
-        color: #0f172a;
+        background: linear-gradient(180deg, #eef4ff 0%, #f8fafc 100%);
+        color: var(--text);
+        font-family: "Segoe UI", Arial, sans-serif;
       }
 
       .app {
-        max-width: 1100px;
-        margin: 40px auto;
-        background: white;
-        border: 1px solid #e2e8f0;
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+        max-width: 1280px;
+        margin: 30px auto;
+        padding: 0 20px 40px;
       }
 
-      .header {
-        background: linear-gradient(135deg, #eff6ff, #f8fafc);
-        border-bottom: 1px solid #e2e8f0;
-        padding: 22px 24px;
-      }
-
-      .header h1 {
-        margin: 0;
-        font-size: 28px;
-      }
-
-      .header p {
-        margin: 8px 0 0 0;
-        color: #475569;
-      }
-
-      .tabs {
+      .topbar {
         display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        background: rgba(255,255,255,0.85);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 16px 20px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(6px);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-badge {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, var(--primary), #60a5fa);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+      }
+
+      .brand h2 {
+        margin: 0;
+        font-size: 22px;
+      }
+
+      .brand small {
+        display: block;
+        color: var(--muted);
+        margin-top: 2px;
+      }
+
+      .header-actions {
+        display: flex;
+        align-items: center;
         gap: 10px;
         flex-wrap: wrap;
-        padding: 18px 24px 0;
-        background: #f8fafc;
-        border-bottom: 1px solid #e2e8f0;
       }
 
-      .tab {
-        background: white;
-        border: 1px solid #e2e8f0;
-        color: #475569;
-        border-radius: 10px;
-        padding: 10px 16px;
+      .pill {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-weight: 700;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .dashboard {
+        margin-top: 22px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 16px;
+      }
+
+      .stat-card {
+        background: var(--panel);
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        padding: 20px 18px;
+        box-shadow: var(--shadow);
+      }
+
+      .stat-card .label {
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .stat-card .value {
+        margin-top: 8px;
+        font-size: 32px;
+        font-weight: 800;
+      }
+
+      .section-title {
+        margin: 28px 0 12px 0;
+        font-size: 22px;
+        font-weight: 800;
+      }
+
+      .subject-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 18px;
+      }
+
+      .subject-card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 20px;
         cursor: pointer;
+        box-shadow: var(--shadow);
+        transition: 0.2s ease;
+      }
+
+      .subject-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 36px rgba(49, 100, 244, 0.12);
+      }
+
+      .subject-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+
+      .subject-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary-soft), #eff6ff);
+        color: var(--primary-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+      }
+
+      .subject-card h3 {
+        margin: 0 0 8px 0;
+        font-size: 22px;
+      }
+
+      .subject-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .progress {
+        margin-top: 14px;
+        background: var(--panel-soft);
+        border: 1px solid #dbeafe;
+        border-radius: 12px;
+        padding: 10px 12px;
+        color: var(--primary-dark);
+        font-size: 13px;
         font-weight: 700;
       }
 
-      .tab.active {
-        background: #dbeafe;
-        color: #1d4ed8;
-        border-color: #93c5fd;
-      }
-
-      .panel {
+      .quiz-screen {
         display: none;
-        padding: 26px 24px 30px;
       }
 
-      .panel.active {
+      .quiz-screen.active {
         display: block;
       }
 
-      .subject-title {
-        font-size: 26px;
+      .quiz-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 24px 0 16px 0;
+        flex-wrap: wrap;
+      }
+
+      .back-btn, .reset-btn {
+        border: none;
+        border-radius: 12px;
+        padding: 12px 16px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .back-btn {
+        background: white;
+        border: 1px solid var(--line);
+        color: var(--text);
+      }
+
+      .reset-btn {
+        background: var(--primary-soft);
+        color: var(--primary-dark);
+        border: 1px solid #bfdbfe;
+      }
+
+      .subject-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+
+      .subject-tab {
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px 16px;
+        cursor: pointer;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      .subject-tab.active {
+        background: var(--primary-soft);
+        color: var(--primary-dark);
+        border-color: #bfdbfe;
+      }
+
+      .subject-header {
+        font-size: clamp(24px, 3vw, 30px);
         font-weight: 800;
-        margin-bottom: 22px;
+        margin-bottom: 20px;
       }
 
       .question-box {
-        background: #fff;
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 18px 18px 16px;
+        background: white;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 20px;
         margin-bottom: 22px;
+        box-shadow: var(--shadow);
       }
 
       .question {
         font-size: 20px;
         font-weight: 700;
-        margin-bottom: 16px;
+        margin-bottom: 18px;
       }
 
       .answers {
@@ -104,13 +282,14 @@
       .answer {
         width: 100%;
         text-align: left;
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--line);
         border-radius: 12px;
         background: #f8fafc;
         padding: 14px 16px;
         cursor: pointer;
         font-size: 16px;
-        color: #0f172a;
+        color: var(--text);
+        transition: 0.2s ease;
       }
 
       .answer:hover {
@@ -119,13 +298,13 @@
       }
 
       .answer.correct {
-        background: #dcfce7;
+        background: var(--success-soft);
         border-color: #86efac;
         color: #166534;
       }
 
       .answer.wrong {
-        background: #fee2e2;
+        background: var(--danger-soft);
         border-color: #fca5a5;
         color: #991b1b;
       }
@@ -134,224 +313,345 @@
         display: none;
         margin-top: 16px;
         padding: 12px 14px;
-        border-radius: 10px;
+        border-radius: 12px;
         font-weight: 700;
-        border: 1px solid #e2e8f0;
+        border: 1px solid var(--line);
       }
 
       .result.show {
         display: block;
       }
 
+      .summary-box {
+        display: none;
+        border-radius: 18px;
+        padding: 18px 20px;
+        margin-top: 20px;
+        background: linear-gradient(135deg, #ecfdf5, #f8fafc);
+        border: 1px solid #86efac;
+      }
+
+      .summary-box.show {
+        display: block;
+      }
+
+      .summary-box h3 {
+        margin: 0 0 10px 0;
+        font-size: 24px;
+      }
+
+      .summary-box p {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
+      }
+
       @media (max-width: 700px) {
-        .header {
-          padding: 18px 16px;
-        }
-
-        .header h1 {
-          font-size: 24px;
-        }
-
-        .tabs {
-          padding-left: 16px;
-          padding-right: 16px;
-        }
-
-        .panel {
-          padding-left: 16px;
-          padding-right: 16px;
-        }
-
-        .question {
-          font-size: 18px;
-        }
+        .header h1 { font-size: 26px; }
+        .question { font-size: 18px; }
       }
     </style>
   </head>
   <body>
     <div class="app">
-      <div class="header">
-        <h1>Study Quiz</h1>
-        <p>Web có thể mở rộng cho nhiều môn học</p>
+      <div id="homeScreen">
+        <div class="topbar">
+          <div class="brand">
+            <div class="brand-badge">S</div>
+            <div>
+              <h2>Student Portal</h2>
+              <small>Learning Dashboard</small>
+            </div>
+          </div>
+
+          <div class="header-actions">
+            <div class="pill">Học tập</div>
+            <div class="pill">Bài kiểm tra</div>
+          </div>
+        </div>
+
+        <div class="dashboard" id="summaryStrip"></div>
+
+        <div class="section-title">Các môn học</div>
+        <div id="subjectGrid" class="subject-grid"></div>
       </div>
 
-      <div id="tabs" class="tabs"></div>
-      <div id="panels"></div>
+      <div id="quizScreen" class="quiz-screen">
+        <div class="quiz-topbar">
+          <button id="backBtn" class="back-btn">← Quay lại</button>
+          <button id="resetBtn" class="reset-btn">Làm lại</button>
+        </div>
+
+        <div id="subjectTabs" class="subject-tabs"></div>
+
+        <div id="subjectHeader" class="subject-header"></div>
+
+        <div id="questionsContainer"></div>
+
+        <div id="summaryBox" class="summary-box"></div>
+      </div>
     </div>
 
+    <script src="questions.js"></script>
     <script>
-      // Đây là nơi bạn thêm môn học mới
-      const subjects = [
-        {
-          id: "c-lang",
-          name: "Lập trình C",
-          questions: [
-            {
-              question: "Câu nào đúng về C?",
-              answers: [
-                { text: "A. C chỉ chạy trên web", correct: false },
-                { text: "B. C là ngôn ngữ lập trình hệ thống mạnh và nhanh", correct: true },
-                { text: "C. C không có biến", correct: false },
-                { text: "D. C không có vòng lặp", correct: false }
-              ]
-            },
-            {
-              question: "Kiểu dữ liệu nào dùng cho số thực trong C?",
-              answers: [
-                { text: "A. int", correct: false },
-                { text: "B. float", correct: true },
-                { text: "C. char", correct: false },
-                { text: "D. bool", correct: false }
-              ]
-            },
-            {
-              question: "Hàm nào dùng để in ra màn hình trong C?",
-              answers: [
-                { text: "A. scanf", correct: false },
-                { text: "B. if", correct: false },
-                { text: "C. printf", correct: true },
-                { text: "D. for", correct: false }
-              ]
-            }
-          ]
-        },
-        {
-          id: "law",
-          name: "Pháp luật",
-          questions: [
-            {
-              question: "Hiến pháp là gì?",
-              answers: [
-                { text: "A. Luật dân sự", correct: false },
-                { text: "B. Luật cơ bản của Nhà nước", correct: true },
-                { text: "C. Bộ luật hình sự", correct: false },
-                { text: "D. Quy định công ty", correct: false }
-              ]
-            },
-            {
-              question: "Nội dung quyền công dân thường liên quan đến?",
-              answers: [
-                { text: "A. Quyền và nghĩa vụ của công dân", correct: true },
-                { text: "B. Chỉ quyền sở hữu nhà", correct: false },
-                { text: "C. Chỉ nghĩa vụ thuế", correct: false },
-                { text: "D. Chỉ quyền học tập", correct: false }
-              ]
-            }
-          ]
-        },
-        {
-          id: "math",
-          name: "Toán học",
-          questions: [
-            {
-              question: "2 + 2 = ?",
-              answers: [
-                { text: "A. 3", correct: false },
-                { text: "B. 4", correct: true },
-                { text: "C. 5", correct: false },
-                { text: "D. 6", correct: false }
-              ]
-            }
-          ]
-        }
-      ];
+      const STORAGE_KEY = "student-dashboard-state-v2";
 
-      const tabsEl = document.getElementById("tabs");
-      const panelsEl = document.getElementById("panels");
+      let currentSubjectIndex = 0;
+
+      const homeScreen = document.getElementById("homeScreen");
+      const quizScreen = document.getElementById("quizScreen");
+      const subjectGrid = document.getElementById("subjectGrid");
+      const summaryStrip = document.getElementById("summaryStrip");
+      const subjectTabs = document.getElementById("subjectTabs");
+      const questionsContainer = document.getElementById("questionsContainer");
+      const subjectHeader = document.getElementById("subjectHeader");
+      const summaryBox = document.getElementById("summaryBox");
+      const backBtn = document.getElementById("backBtn");
+      const resetBtn = document.getElementById("resetBtn");
+
+      function loadState() {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+        } catch {
+          return {};
+        }
+      }
+
+      function saveState() {
+        const state = {};
+        subjects.forEach(subject => {
+          const answered = subject.questions.filter(q => q._answered).length;
+          const correct = subject.questions.filter(q => q._selectedCorrect).length;
+          state[subject.id] = {
+            done: answered,
+            correct,
+            total: subject.questions.length
+          };
+        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      }
+
+      function getSubjectProgress(subject) {
+        const saved = loadState()[subject.id] || {
+          done: 0,
+          correct: 0,
+          total: subject.questions.length
+        };
+        return {
+          done: Math.min(saved.done, subject.questions.length),
+          correct: Math.min(saved.correct, subject.questions.length),
+          total: subject.questions.length
+        };
+      }
+
+      function renderSummaryStrip() {
+        const all = subjects.map(subject => getSubjectProgress(subject));
+        const totalQuestions = all.reduce((acc, x) => acc + x.total, 0);
+        const totalDone = all.reduce((acc, x) => acc + x.done, 0);
+        const totalCorrect = all.reduce((acc, x) => acc + x.correct, 0);
+        const completion = totalQuestions ? Math.round((totalDone / totalQuestions) * 100) : 0;
+
+        summaryStrip.innerHTML = `
+          <div class="stat-card">
+            <div class="label">Tổng câu hỏi</div>
+            <div class="value">${totalQuestions}</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Đã làm</div>
+            <div class="value">${totalDone}</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Đúng</div>
+            <div class="value">${totalCorrect}</div>
+          </div>
+          <div class="stat-card">
+            <div class="label">Hoàn thành</div>
+            <div class="value">${completion}%</div>
+          </div>
+        `;
+      }
+
+      function renderSubjectCards() {
+        subjectGrid.innerHTML = "";
+        subjects.forEach(subject => {
+          const prog = getSubjectProgress(subject);
+          const card = document.createElement("div");
+          card.className = "subject-card";
+
+          const initial = subject.name.charAt(0).toUpperCase();
+
+          card.innerHTML = `
+            <div class="subject-card-header">
+              <div class="subject-icon">${initial}</div>
+            </div>
+            <h3>${subject.name}</h3>
+            <p>${subject.description}</p>
+            <div class="progress">
+              Tiến độ: ${prog.done}/${prog.total} • Đúng: ${prog.correct}
+            </div>
+          `;
+
+          card.addEventListener("click", () => {
+            currentSubjectIndex = subjects.findIndex(s => s.id === subject.id);
+            renderQuizScreen();
+          });
+
+          subjectGrid.appendChild(card);
+        });
+
+        renderSummaryStrip();
+      }
 
       function renderSubjectTabs() {
+        subjectTabs.innerHTML = "";
         subjects.forEach((subject, index) => {
-          const tab = document.createElement("button");
-          tab.className = "tab " + (index === 0 ? "active" : "");
-          tab.textContent = subject.name;
-          tab.dataset.target = subject.id;
-          tab.addEventListener("click", () => {
-            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-            document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-            tab.classList.add("active");
-            document.getElementById(subject.id).classList.add("active");
+          const btn = document.createElement("button");
+          btn.className = "subject-tab " + (index === currentSubjectIndex ? "active" : "");
+          btn.textContent = subject.name;
+
+          btn.addEventListener("click", () => {
+            currentSubjectIndex = index;
+            renderQuizScreen();
           });
-          tabsEl.appendChild(tab);
+
+          subjectTabs.appendChild(btn);
         });
       }
 
-      function renderPanels() {
-        subjects.forEach((subject, subjectIndex) => {
-          const panel = document.createElement("div");
-          panel.id = subject.id;
-          panel.className = "panel " + (subjectIndex === 0 ? "active" : "");
+      function ensureSubjectState(subject) {
+        if (!subject.questions.every(q => q._answered !== undefined)) {
+          subject.questions.forEach(question => {
+            question._answered = false;
+            question._selectedCorrect = false;
+          });
+        }
+      }
 
-          const title = document.createElement("div");
-          title.className = "subject-title";
-          title.textContent = subject.name;
-          panel.appendChild(title);
+      function renderQuizScreen() {
+        const subject = subjects[currentSubjectIndex];
 
-          subject.questions.forEach((question, qIndex) => {
-            const questionBox = document.createElement("div");
-            questionBox.className = "question-box";
+        homeScreen.style.display = "none";
+        quizScreen.classList.add("active");
 
-            const q = document.createElement("div");
-            q.className = "question";
-            q.textContent = `${qIndex + 1}. ${question.question}`;
-            questionBox.appendChild(q);
+        ensureSubjectState(subject);
+        renderSubjectTabs();
+        subjectHeader.textContent = subject.name;
+        questionsContainer.innerHTML = "";
+        summaryBox.classList.remove("show");
+        summaryBox.innerHTML = "";
 
-            const answersWrap = document.createElement("div");
-            answersWrap.className = "answers";
+        subject.questions.forEach((question, qIndex) => {
+          const box = document.createElement("div");
+          box.className = "question-box";
 
-            question.answers.forEach(answer => {
-              const btn = document.createElement("button");
-              btn.className = "answer";
-              btn.type = "button";
-              btn.textContent = answer.text;
+          const qText = document.createElement("div");
+          qText.className = "question";
+          qText.textContent = `${qIndex + 1}. ${question.question}`;
+          box.appendChild(qText);
 
-              btn.addEventListener("click", () => {
-                const allAnswers = Array.from(btn.parentElement.querySelectorAll(".answer"));
-                allAnswers.forEach(item => item.classList.remove("correct", "wrong"));
+          const answersWrap = document.createElement("div");
+          answersWrap.className = "answers";
 
-                const result = btn.parentElement.parentElement.querySelector(".result");
+          question.answers.forEach(answer => {
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "answer";
+            btn.textContent = answer.text;
 
-                if (answer.correct) {
-                  btn.classList.add("correct");
-                  result.textContent = "Đúng rồi! Bạn chọn đáp án chính xác.";
-                  result.style.background = "#dcfce7";
-                  result.style.borderColor = "#86efac";
-                  result.style.color = "#166534";
-                } else {
-                  btn.classList.add("wrong");
+            if (question._answered && answer.correct) {
+              btn.classList.add("correct");
+            }
 
-                  const correctAnswer = question.answers.find(a => a.correct);
-                  allAnswers.forEach(item => {
-                    if (item.textContent.includes(correctAnswer.text.split(".")[1].trim())) {
-                      item.classList.add("correct");
-                    }
-                  });
+            btn.addEventListener("click", () => {
+              if (question._answered) return;
 
-                  result.textContent = "Sai rồi! Đáp án đúng là: " + correctAnswer.text;
-                  result.style.background = "#fee2e2";
-                  result.style.borderColor = "#fca5a5";
-                  result.style.color = "#991b1b";
-                }
+              question._answered = true;
 
-                result.classList.add("show");
-              });
+              const allAnswers = Array.from(btn.parentElement.querySelectorAll(".answer"));
+              const result = btn.parentElement.parentElement.querySelector(".result");
 
-              answersWrap.appendChild(btn);
+              allAnswers.forEach(item => item.classList.remove("correct", "wrong"));
+
+              if (answer.correct) {
+                btn.classList.add("correct");
+                question._selectedCorrect = true;
+                result.textContent = "Đúng rồi! Bạn chọn đáp án chính xác.";
+                result.style.background = "#dcfce7";
+                result.style.borderColor = "#86efac";
+                result.style.color = "#166534";
+              } else {
+                btn.classList.add("wrong");
+
+                const correctAnswer = question.answers.find(a => a.correct);
+                allAnswers.forEach(item => {
+                  if (item.textContent.includes(correctAnswer.text.split(".")[1].trim())) {
+                    item.classList.add("correct");
+                  }
+                });
+
+                question._selectedCorrect = false;
+                result.textContent = "Sai rồi! Đáp án đúng là: " + correctAnswer.text;
+                result.style.background = "#fee2e2";
+                result.style.borderColor = "#fca5a5";
+                result.style.color = "#991b1b";
+              }
+
+              result.classList.add("show");
+              saveState();
+              renderSubjectCards();
+              checkIfFinished(subject);
             });
 
-            const result = document.createElement("div");
-            result.className = "result";
-            questionBox.appendChild(answersWrap);
-            questionBox.appendChild(result);
-
-            panel.appendChild(questionBox);
+            answersWrap.appendChild(btn);
           });
 
-          panelsEl.appendChild(panel);
+          const result = document.createElement("div");
+          result.className = "result";
+          box.appendChild(answersWrap);
+          box.appendChild(result);
+
+          questionsContainer.appendChild(box);
         });
       }
 
-      renderSubjectTabs();
-      renderPanels();
+      function checkIfFinished(subject) {
+        const answeredCount = subject.questions.filter(q => q._answered).length;
+        const total = subject.questions.length;
+
+        if (answeredCount === total) {
+          const correctCount = subject.questions.filter(q => q._selectedCorrect).length;
+          const percent = Math.round((correctCount / total) * 100);
+
+          summaryBox.classList.add("show");
+          summaryBox.innerHTML = `
+            <h3>Kết quả</h3>
+            <p>Điểm: ${correctCount}/${total} (${percent}%)</p>
+          `;
+        } else {
+          summaryBox.classList.remove("show");
+          summaryBox.innerHTML = "";
+        }
+
+        saveState();
+      }
+
+      backBtn.addEventListener("click", () => {
+        quizScreen.classList.remove("active");
+        homeScreen.style.display = "block";
+      });
+
+      resetBtn.addEventListener("click", () => {
+        const subject = subjects[currentSubjectIndex];
+        subject.questions.forEach(question => {
+          question._answered = false;
+          question._selectedCorrect = false;
+        });
+        saveState();
+        renderQuizScreen();
+        renderSubjectCards();
+      });
+
+      renderSubjectCards();
     </script>
   </body>
 </html>
