@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BTRan | C-Lang</title>
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --panel: #ffffff;
+        --panel-soft: #f1f5f9;
+        --surface: #eef6ff;
+        --text: #0f172a;
+        --muted: #475569;
+        --line: #e2e8f0;
+        --primary: #2563eb;
+        --primary-soft: #dbeafe;
+        --secondary: #0f766e;
+        --success: #16a34a;
+        --warning: #f59e0b;
+        --code-bg: #0f172a;
+        --code-text: #dbeafe;
+        --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        line-height: 1.7;
+        letter-spacing: 0.01em;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .app {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.92);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+      }
+
+      .brand-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .logo {
+        width: 36px;
+        height: 36px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--primary), #60a5fa);
+        color: #fff;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 18px rgba(37, 99, 235, 0.2);
+      }
+
+      .brand-text {
+        font-weight: 800;
+        font-size: 1.05rem;
+      }
+
+      .brand-sub {
+        display: block;
+        font-size: 11px;
+        color: var(--muted);
+        font-weight: 500;
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .chip {
+        background: #fff;
+        border: 1px solid var(--line);
+        color: var(--muted);
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-weight: 600;
+        font-size: 12px;
+      }
+
+      .main {
+        display: grid;
+        grid-template-columns: 330px minmax(0, 1fr);
+        min-height: calc(100vh - 70px);
+      }
+
+      .sidebar {
+        border-right: 1px solid var(--line);
+        background: var(--panel);
+        padding: 20px 16px;
+        overflow-y: auto;
+      }
+
+      .sidebar-title {
+        margin: 0 0 14px 0;
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #64748b;
+        font-weight: 800;
+      }
+
+      .chapter {
+        background: var(--panel);
+        margin-bottom: 14px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(15, 23, 42, 0.02);
+      }
+
+      .chapter-header {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 12px;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .chapter-main {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+      }
+
+      .chapter-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 10px;
+        background: var(--primary-soft);
+        color: var(--primary);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 12px;
+        flex-shrink: 0;
+      }
+
+      .chapter-meta {
+        min-width: 0;
+      }
+
+      .chapter-title {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.5;
+        font-weight: 700;
+        color: var(--text);
+      }
+
+      .chapter-sub {
+        margin-top: 3px;
+        font-size: 10px;
+        color: var(--muted);
+      }
+
+      .caret {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .chapter-body {
+        border-top: 1px solid var(--line);
+        padding: 12px;
+      }
+
+      .article {
+        background: #f8fafc;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+        margin-bottom: 10px;
+      }
+
+      .article-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .article-head h5 {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.5;
+        color: var(--text);
+      }
+
+      .tag {
+        font-size: 10px;
+        background: #e2e8f0;
+        color: #475569;
+        border-radius: 6px;
+        padding: 4px 6px;
+        white-space: nowrap;
+      }
+
+      .fix-text,
+      .fix-text p,
+      .fix-text li,
+      .fix-text span,
+      .fix-text div,
+      .fix-text ul,
+      .fix-text ol,
+      .fix-text pre,
+      .fix-text code,
+      .fix-text h1,
+      .fix-text h2,
+      .fix-text h3,
+      .fix-text h4,
+      .fix-text h5,
+      .fix-text h6 {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .content {
+        color: var(--text);
+        font-size: 14px;
+        line-height: 1.8;
+      }
+
+      .content p {
+        margin: 0 0 12px 0;
+      }
+
+      .content p:last-child {
+        margin-bottom: 0;
+      }
+
+      .keypoints {
+        border-top: 1px dashed var(--line);
+        margin-top: 12px;
+        padding-top: 12px;
+      }
+
+      .keypoints-title {
+        margin: 0 0 8px 0;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .keypoints ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .keypoints li {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-size: 12px;
+        color: var(--text);
+      }
+
+      .dot {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: #dcfce7;
+        color: var(--success);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+        font-weight: 800;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .codebox {
+        margin-top: 14px;
+        background: var(--code-bg);
+        border: 1px solid #1e293b;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+      }
+
+      .codehead {
+        background: #0b1220;
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+        color: #cbd5e1;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 8px 12px;
+        display: flex;
+        justify-content: space-between;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .codebody {
+        margin: 0;
+        padding: 14px;
+        font-size: 12px;
+        line-height: 1.7;
+        color: var(--code-text);
+        background: var(--code-bg);
+        white-space: pre-wrap;
+        overflow-x: auto;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+      }
+
+      .workspace {
+        background: var(--bg);
+        padding: 30px 30px 40px 30px;
+      }
+
+      .workspace-panel {
+        max-width: 980px;
+        margin: 0 auto;
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+        padding: 28px 24px;
+      }
+
+      .workspace-panel h1 {
+        margin: 0 0 18px 0;
+        font-size: clamp(28px, 4vw, 42px);
+        line-height: 1.2;
+      }
+
+      .workspace-panel p {
+        margin: 0 0 14px 0;
+        font-size: 16px;
+        line-height: 1.8;
+        color: var(--text);
+      }
+
+      .feature-box {
+        margin-top: 20px;
+        background: #f8fafc;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 20px;
+      }
+
+      .feature-box h3 {
+        margin: 0 0 12px 0;
+        font-size: 22px;
+      }
+
+      .feature-box p {
+        font-size: 15px;
+      }
+
+      .badge-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 18px 0 6px 0;
+      }
+
+      .badge {
+        background: var(--primary-soft);
+        color: var(--primary);
+        border: 1px solid #bfdbfe;
+        border-radius: 999px;
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      @media (max-width: 900px) {
+        .main {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          border-right: none;
+          border-bottom: 1px solid var(--line);
+        }
+
+        .workspace {
+          padding: 18px 14px 30px 14px;
+        }
+
+        .workspace-panel {
+          padding: 22px 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand-wrap">
+          <div class="logo">C</div>
+          <div>
+            <div class="brand-text">BTRan</div>
+            <span class="brand-sub">C-Lang / HCMUTE</span>
+          </div>
+        </div>
+
+        <div class="top-actions">
+          <div class="chip">Ngôn ngữ C/C++</div>
+          <div class="chip">9 chương</div>
+        </div>
+      </header>
+
+      <div class="main">
+        <aside class="sidebar">
+          <h2 class="sidebar-title">Lý thuyết</h2>
+
+          <div class="chapter">
+            <button class="chapter-header">
+              <div class="chapter-main">
+                <div class="chapter-num">1</div>
+                <div class="chapter-meta">
+                  <p class="chapter-title">Tổng quan về C & Môi trường</p>
+                  <div class="chapter-sub">UTT: 12 • HCMUTE: 15</div>
+                </div>
+              </div>
+              <span class="caret">▾</span>
+            </button>
+
+            <div class="chapter-body">
+              <div class="article">
+                <div class="article-head">
+                  <h5>1.1 Khái niệm ngôn ngữ C</h5>
+                  <span class="tag">UTT p.12</span>
+                </div>
+
+                <div class="content fix-text">
+                  <p>Ngôn ngữ C là ngôn ngữ lập trình bậc trung, có tốc độ thực thi nhanh, khả năng kiểm soát bộ nhớ mạnh mẽ và được dùng nhiều trong hệ thống, phần mềm nhúng, và ứng dụng hiệu năng cao.</p>
+                  <p>C là ngôn ngữ có cú pháp gọn, ít ẩn dụ hơn so với các ngôn ngữ hiện đại, nhưng lại cực kỳ mạnh vì cho phép lập trình ở mức thấp mà vẫn kiểm soát cấu trúc dữ liệu rõ ràng.</p>
+                </div>
+
+                <div class="keypoints">
+                  <p class="keypoints-title">Điểm cốt lõi</p>
+                  <ul>
+                    <li><span class="dot">✓</span><span>Ngôn ngữ C có tính cấu trúc, hướng thủ tục.</span></li>
+                    <li><span class="dot">✓</span><span>Khả năng quản lý bộ nhớ trực tiếp bằng con trỏ.</span></li>
+                    <li><span class="dot">✓</span><span>Phổ biến trong hệ thống, nhúng, driver, và engine game.</span></li>
+                  </ul>
+                </div>
+
+                <div class="codebox">
+                  <div class="codehead">
+                    <span>Ví dụ</span>
+                    <span>main.c</span>
+                  </div>
+                  <pre class="codebody">#include &lt;stdio.h&gt;
+
+int main() {
+    printf("Xin chao C!");
+    return 0;
+}</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chapter">
+            <button class="chapter-header">
+              <div class="chapter-main">
+                <div class="chapter-num">2</div>
+                <div class="chapter-meta">
+                  <p class="chapter-title">Kiểu dữ liệu cơ bản & Nhập/Xuất</p>
+                  <div class="chapter-sub">UTT: 24 • HCMUTE: 30</div>
+                </div>
+              </div>
+              <span class="caret">▾</span>
+            </button>
+
+            <div class="chapter-body">
+              <div class="article">
+                <div class="article-head">
+                  <h5>2.1 Kiểu số nguyên và thực</h5>
+                  <span class="tag">UTT p.24</span>
+                </div>
+
+                <div class="content fix-text">
+                  <p>Trong C, các kiểu dữ liệu cơ bản bao gồm int, float, double, char, cùng với các kiểu unsigned, long, short để phù hợp với mục đích lưu trữ và xử lý.</p>
+                  <p>Việc chọn kiểu dữ liệu đúng không chỉ giúp bộ nhớ hợp lý mà còn tránh các lỗi tràn số, sai lệch dữ liệu, và gây nguy hiểm khi xử lý phép toán trên biến.</p>
+                </div>
+
+                <div class="keypoints">
+                  <p class="keypoints-title">Điểm cốt lõi</p>
+                  <ul>
+                    <li><span class="dot">✓</span><span>int dành cho số nguyên; float/double dành cho số thực.</span></li>
+                    <li><span class="dot">✓</span><span>char được dùng cho ký tự và mã ASCII.</span></li>
+                    <li><span class="dot">✓</span><span>scanf/printf là cách nhập/xuất chuẩn trong C.</span></li>
+                  </ul>
+                </div>
+
+                <div class="codebox">
+                  <div class="codehead">
+                    <span>Ví dụ</span>
+                    <span>input.c</span>
+                  </div>
+                  <pre class="codebody">#include &lt;stdio.h&gt;
+
+int main() {
+    int a = 10;
+    float b = 3.5f;
+    printf("a = %d, b = %.2f\\n", a, b);
+    return 0;
+}</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chapter">
+            <button class="chapter-header">
+              <div class="chapter-main">
+                <div class="chapter-num">3</div>
+                <div class="chapter-meta">
+                  <p class="chapter-title">Cấu trúc điều khiển</p>
+                  <div class="chapter-sub">UTT: 47 • HCMUTE: 55</div>
+                </div>
+              </div>
+              <span class="caret">▾</span>
+            </button>
+          </div>
+        </aside>
+
+        <main class="workspace">
+          <div class="workspace-panel fix-text">
+            <div class="badge-row">
+              <span class="badge">Học C</span>
+              <span class="badge">Cấu trúc dữ liệu</span>
+              <span class="badge">Lập trình hệ thống</span>
+            </div>
+
+            <h1>Ngôn ngữ lập trình C/C++</h1>
+
+            <p>C là một ngôn ngữ lập trình có cấu trúc, hiệu suất cao, và rất quan trọng trong các môn học kỹ thuật. Trong quá trình học, sinh viên cần nắm rõ từng khái niệm như kiểu dữ liệu, vòng lặp, điều kiện, hàm, mảng, con trỏ, cấu trúc và thao tác tệp.</p>
+
+            <p>Điểm đặc biệt của C là khả năng làm việc ở tầng thấp, cho phép lập trình điều khiển bộ nhớ, xử lý kernel, driver, và phần mềm nhúng. Tuy nhiên, chính vì vậy, người học cần thận trọng trong việc quản lý biến, con trỏ và vùng nhớ.</p>
+
+            <div class="feature-box">
+              <h3>Ví dụ tổng hợp</h3>
+              <p>Đoạn mã dưới đây minh họa cách sử dụng if, for và hàm trong C để tính tổng số chẵn từ 1 tới 10:</p>
+
+              <div class="codebox" style="margin-top: 18px;">
+                <div class="codehead">
+                  <span>Ví dụ</span>
+                  <span>sum_even.c</span>
+                </div>
+                <pre class="codebody">#include &lt;stdio.h&gt;
+
+int sumEven(int n) {
+    int total = 0;
+    for (int i = 1; i &lt;= n; i++) {
+        if (i % 2 == 0) {
+            total += i;
+        }
+    }
+    return total;
+}
+
+int main() {
+    int x = 10;
+    printf("Tong so chan tu 1 den %d la: %d\\n", x, sumEven(x));
+    return 0;
+}</pre>
+              </div>
+            </div>
+
+            <p>Để học tốt C, bạn nên đọc bài từng chương, làm bài tập thực hành, và viết lại các ví dụ bằng tay để hiểu đúng bản chất của ngôn ngữ. Một lưu ý quan trọng là C rất nhạy với lỗi con trỏ và định dạng dữ liệu.</p>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
