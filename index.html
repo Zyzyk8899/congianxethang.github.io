@@ -6,177 +6,138 @@
     <title>Student Portal</title>
     <style>
       :root {
-        --bg: #020d1d;
-        --bg-2: #071a2f;
-        --surface: #0d1d32;
-        --surface-2: #12273f;
-        --panel: #111d31;
-        --panel-2: #17293d;
-        --panel-3: #1d3351;
-        --text: #edf5ff;
-        --muted: #a1b4d6;
-        --line: rgba(148, 163, 184, 0.18);
-        --blue: #3b82f6;
-        --blue-2: #5b8ef7;
-        --green: #2dd4bf;
-        --purple: #8b5cf6;
-        --orange: #f59e0b;
-        --shadow: 0 18px 40px rgba(2, 8, 23, 0.55);
+        --bg: #dfe3e8;
+        --panel: #f3f5f7;
+        --white: #ffffff;
+        --text: #1b2430;
+        --muted: #57657a;
+        --line: #d7dfe7;
+        --blue: #2f6ef5;
+        --blue-2: #5a8dff;
+        --blue-soft: #eaf1ff;
+        --shadow: 0 12px 26px rgba(27, 36, 48, 0.08);
       }
 
-      * { box-sizing: border-box; }
+      * {
+        box-sizing: border-box;
+      }
 
       html, body {
         margin: 0;
-        padding: 0;
         background: var(--bg);
-        color: var(--text);
         font-family: "Segoe UI", Arial, sans-serif;
+        color: var(--text);
       }
 
       body {
         min-height: 100vh;
+        padding: 26px;
       }
 
-      button, input {
-        font: inherit;
+      .page {
+        max-width: 1280px;
+        margin: 0 auto;
+        background: transparent;
       }
 
-      .app {
-        min-height: 100vh;
-        background: var(--bg);
+      .shell {
+        background: rgba(255,255,255,0.2);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        overflow: hidden;
       }
 
       .topbar {
-        background: rgba(9, 18, 30, 0.96);
-        border-bottom: 1px solid var(--line);
-        height: 72px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 0 16px;
+        background: rgba(255,255,255,0.5);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 20px 24px;
+        box-shadow: var(--shadow);
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
         gap: 16px;
       }
 
-      .brand-wrap {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .brand-mark {
-        width: 28px;
-        height: 28px;
-        border-radius: 10px;
+      .logo {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
         background: linear-gradient(135deg, var(--blue), var(--blue-2));
         display: flex;
         align-items: center;
         justify-content: center;
+        color: white;
         font-weight: 800;
+        font-size: 26px;
       }
 
-      .brand-title {
-        font-size: 18px;
+      .brand-main {
+        font-size: clamp(28px, 3vw, 44px);
         font-weight: 800;
-        color: var(--text);
+        letter-spacing: -0.05em;
       }
 
       .brand-sub {
-        font-size: 12px;
+        margin-top: 6px;
+        font-size: clamp(18px, 1.8vw, 28px);
         color: var(--muted);
+        font-weight: 500;
       }
 
-      .topbar-right {
+      .top-actions {
         display: flex;
-        align-items: center;
-        gap: 8px;
+        gap: 12px;
+        flex-wrap: wrap;
       }
 
-      .chip {
-        background: rgba(255,255,255,0.04);
+      .pill {
         border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 7px 12px;
-        color: var(--muted);
-        font-size: 12px;
-        font-weight: 700;
-      }
-
-      .dark-btn {
-        width: 32px;
-        height: 32px;
-        border: 1px solid var(--line);
-        background: rgba(255,255,255,0.04);
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        background: rgba(255,255,255,0.35);
         color: var(--text);
+        border-radius: 999px;
+        padding: 12px 20px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
       }
 
       .main {
-        max-width: 1300px;
-        margin: 0 auto;
-        padding: 26px 18px 60px;
+        padding: 26px 0 0;
       }
 
-      .subject-landing {
-        padding: 18px 0 0;
+      .section-title {
+        font-size: clamp(28px, 3vw, 50px);
+        font-weight: 800;
+        letter-spacing: -0.04em;
+        margin: 0 0 18px 18px;
       }
 
-      .home-card {
-        background: linear-gradient(180deg, rgba(17,29,49,0.8), rgba(17,29,49,0.9));
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        padding: 22px 20px 18px;
-        box-shadow: var(--shadow);
-      }
-
-      .notice {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(59,130,246,0.12);
-        border: 1px solid rgba(96,165,250,0.35);
-        border-radius: 999px;
-        padding: 8px 14px;
-        color: #dfeeff;
-        font-size: 14px;
-        font-weight: 700;
-      }
-
-      .landing-title {
-        margin: 24px 0 10px;
-        font-size: clamp(38px, 4vw, 72px);
-        font-weight: 900;
-        letter-spacing: -0.06em;
-      }
-
-      .landing-sub {
-        color: var(--muted);
-        font-size: clamp(18px, 2vw, 30px);
-        line-height: 1.5;
-        max-width: 1100px;
-      }
-
-      .subject-grid {
-        margin-top: 24px;
+      .card-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(320px, 1fr));
-        gap: 22px;
+        gap: 20px;
+        padding: 0 18px 18px;
       }
 
       .subject-card {
-        background: linear-gradient(180deg, rgba(22,35,55,0.92), rgba(17,29,49,0.9));
+        background: rgba(255,255,255,0.42);
         border: 1px solid var(--line);
         border-radius: 24px;
-        padding: 20px 18px 18px;
+        padding: 20px;
+        min-height: 310px;
         box-shadow: var(--shadow);
+        cursor: pointer;
+        transition: 0.2s ease;
       }
 
       .subject-card:hover {
-        transform: translateY(-2px);
-        transition: 0.2s ease;
+        transform: translateY(-3px);
       }
 
       .subject-head {
@@ -187,744 +148,239 @@
       }
 
       .subject-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(59, 130, 246, 0.08));
-        border: 1px solid rgba(96,165,250,0.3);
+        width: 64px;
+        height: 64px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, var(--blue-soft), #edf4ff);
+        border: 1px solid rgba(90,141,255,0.2);
         display: flex;
         align-items: center;
         justify-content: center;
-        color: var(--blue);
         font-size: 28px;
         font-weight: 800;
+        color: var(--blue);
       }
 
       .subject-badge {
-        background: rgba(59,130,246,0.12);
-        border: 1px solid rgba(96,165,250,0.3);
+        background: rgba(47,110,245,0.08);
+        border: 1px solid rgba(47,110,245,0.2);
         border-radius: 999px;
         padding: 8px 12px;
-        color: #dfeeff;
-        font-size: 12px;
+        color: var(--blue);
+        font-size: 13px;
         font-weight: 700;
       }
 
-      .subject-title {
+      .subject-name {
         font-size: clamp(28px, 2vw, 42px);
         font-weight: 800;
         letter-spacing: -0.04em;
-        margin: 10px 0 12px;
+        margin: 0 0 12px;
       }
 
       .subject-desc {
+        color: var(--muted);
         font-size: 18px;
         line-height: 1.6;
-        color: var(--muted);
-        margin: 0 0 22px 0;
+        margin: 0 0 22px;
       }
 
-      .stats-grid {
+      .stats {
         display: grid;
-        grid-template-columns: repeat(2, minmax(180px, 1fr));
-        gap: 14px;
+        grid-template-columns: repeat(2, minmax(170px, 1fr));
+        gap: 12px;
       }
 
-      .mini-stat {
-        background: rgba(148, 163, 184, 0.08);
-        border: 1px solid rgba(148,163,184,0.12);
-        border-radius: 14px;
+      .stat-box {
+        background: rgba(255,255,255,0.34);
+        border: 1px solid var(--line);
+        border-radius: 16px;
         padding: 12px 14px;
-        min-height: 90px;
+        min-height: 100px;
       }
 
-      .mini-stat-row {
+      .stat-row {
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 8px;
         margin-bottom: 10px;
       }
 
-      .mini-stat-icon {
+      .stat-bullet {
         width: 22px;
         height: 22px;
         border-radius: 50%;
-        background: rgba(59,130,246,0.12);
+        background: rgba(47,110,245,0.12);
         color: var(--blue);
+        font-weight: 800;
         display: flex;
-        align-items: center;
         justify-content: center;
-        font-weight: 800;
-      }
-
-      .mini-stat-label {
+        align-items: center;
         font-size: 14px;
-        color: var(--muted);
       }
 
-      .mini-stat-value {
-        font-size: clamp(18px, 2vw, 30px);
+      .stat-label {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .stat-value {
+        font-size: clamp(22px, 1.8vw, 36px);
         font-weight: 800;
       }
 
-      .subject-cta {
-        margin-top: 22px;
+      .cta {
+        margin-top: 18px;
         width: 100%;
         border: none;
         background: linear-gradient(135deg, var(--blue), var(--blue-2));
         color: white;
-        border-radius: 14px;
-        padding: 18px 18px;
-        font-size: clamp(20px, 2vw, 30px);
+        border-radius: 16px;
+        padding: 18px 20px;
+        font-size: clamp(22px, 2vw, 30px);
         font-weight: 800;
         cursor: pointer;
-        box-shadow: 0 12px 30px rgba(59,130,246,0.35);
-      }
-
-      .subject-page {
-        display: none;
-      }
-
-      .subject-page.active {
-        display: block;
-      }
-
-      .subject-toolbar {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 14px;
-        padding: 8px 0 12px;
-        background: rgba(2, 13, 29, 0.9);
-        backdrop-filter: blur(8px);
-      }
-
-      .subject-brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .subject-pill {
-        width: 38px;
-        height: 38px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--blue), var(--blue-2));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-      }
-
-      .subject-name {
-        font-size: 18px;
-        font-weight: 800;
-      }
-
-      .subject-meta {
-        font-size: 12px;
-        color: var(--muted);
-        background: rgba(255,255,255,0.04);
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 6px 10px;
-      }
-
-      .toolbar-tabs {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-
-      .tab-btn {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 10px 14px;
-        color: var(--muted);
-        font-weight: 700;
-        cursor: pointer;
-      }
-
-      .tab-btn.active {
-        background: rgba(59,130,246,0.12);
-        border-color: rgba(96,165,250,0.45);
-        color: #dfeeff;
-      }
-
-      .search-box {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        border: 1px solid var(--line);
-        background: rgba(255,255,255,0.04);
-        border-radius: 999px;
-        padding: 8px 12px;
-        color: var(--muted);
-      }
-
-      .content-body {
-        margin-top: 18px;
-      }
-
-      .chapter-panel {
-        background: rgba(17,29,49,0.92);
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 16px;
-        margin-bottom: 18px;
-      }
-
-      .chapter-tabs {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-
-      .chapter-tab {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        padding: 10px 14px;
-        min-width: 140px;
-        color: var(--muted);
-        font-weight: 700;
-        cursor: pointer;
-      }
-
-      .chapter-tab.active {
-        background: rgba(59,130,246,0.18);
-        border-color: rgba(96,165,250,0.42);
-        color: #dfeeff;
-      }
-
-      .chapter-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 18px;
-        padding: 2px 2px 12px;
-      }
-
-      .chapter-title {
-        font-size: 15px;
-        color: var(--muted);
-        line-height: 1.5;
-      }
-
-      .chapter-title strong {
-        color: var(--text);
-        font-size: 18px;
-      }
-
-      .progress-pill {
-        background: rgba(255,255,255,0.04);
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 6px 12px;
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .question-panel {
-        background: rgba(17,29,49,0.92);
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 18px 18px 14px;
-        margin-top: 16px;
-      }
-
-      .question-toolbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 0 0 12px;
-      }
-
-      .question-left {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        color: var(--muted);
-        flex-wrap: wrap;
-      }
-
-      .question-badge {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        background: rgba(59,130,246,0.18);
-        color: #dfeeff;
-        font-weight: 800;
-      }
-
-      .question-body {
-        margin-top: 18px;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        background: rgba(255,255,255,0.02);
-        padding: 18px 16px;
-      }
-
-      .question-body h3 {
-        margin: 0 0 16px;
-        font-size: clamp(24px, 3vw, 40px);
-        line-height: 1.5;
-        letter-spacing: -0.04em;
-      }
-
-      .question-body .answer {
-        display: block;
-        width: 100%;
-        background: rgba(255,255,255,0.03);
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        margin: 8px 0;
-        padding: 14px 16px;
-        color: var(--text);
-        font-size: 18px;
-        text-align: left;
-        cursor: pointer;
-      }
-
-      .question-body .answer.correct {
-        background: rgba(34,197,94,0.12);
-        border-color: rgba(34,197,94,0.42);
-      }
-
-      .question-body .answer.wrong {
-        background: rgba(239,68,68,0.12);
-        border-color: rgba(239,68,68,0.4);
-      }
-
-      .result-box {
-        display: none;
-        margin-top: 14px;
-        padding: 12px 14px;
-        border-radius: 12px;
-        background: rgba(255,255,255,0.04);
-        border: 1px solid var(--line);
-        color: var(--text);
-        font-weight: 700;
-      }
-
-      .result-box.show {
-        display: block;
-      }
-
-      .editor-shell {
-        display: flex;
-        align-items: stretch;
-        min-height: 620px;
-        margin-top: 18px;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        overflow: hidden;
-        background: rgba(17,29,49,0.9);
-      }
-
-      .editor-left {
-        flex: 1.2;
-        border-right: 1px solid var(--line);
-        padding: 18px 18px 12px;
-      }
-
-      .editor-header {
-        height: 48px;
-        background: rgba(255,255,255,0.04);
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 14px;
-        margin-bottom: 14px;
-        color: var(--muted);
-      }
-
-      .editor-body {
-        height: 540px;
-        border: 1px solid var(--line);
-        background: rgba(255,255,255,0.02);
-        border-radius: 12px;
-        padding: 14px 16px;
-        font-family: "Consolas", "Courier New", monospace;
-        font-size: 16px;
-        line-height: 1.6;
-        color: #d7e6ff;
-        white-space: pre-wrap;
-      }
-
-      .editor-right {
-        flex: 0.8;
-        background: rgba(11,18,31,0.9);
-        border-left: 1px solid var(--line);
-        padding: 16px;
-      }
-
-      .editor-stat {
-        height: 120px;
-        border-radius: 14px;
-        background: rgba(255,255,255,0.04);
-        border: 1px solid var(--line);
-        padding: 14px;
-        margin-bottom: 12px;
-      }
-
-      .editor-stat .label {
-        color: var(--muted);
-        font-size: 12px;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-      }
-
-      .editor-stat .value {
-        margin-top: 10px;
-        font-size: 28px;
-        font-weight: 800;
       }
 
       @media (max-width: 900px) {
+        body {
+          padding: 18px;
+        }
+
         .topbar {
           flex-direction: column;
           align-items: flex-start;
-          height: auto;
         }
-        .subject-grid {
+
+        .brand-main {
+          font-size: 32px;
+        }
+
+        .card-grid {
           grid-template-columns: 1fr;
-        }
-        .editor-shell {
-          flex-direction: column;
         }
       }
     </style>
   </head>
   <body>
-    <div class="app">
-      <div id="homeScreen" class="screen">
-        <div class="topbar">
-          <div class="brand-wrap">
-            <div class="brand-mark">S</div>
+    <div class="page">
+      <div class="shell">
+        <header class="topbar">
+          <div class="brand">
+            <div class="logo">S</div>
             <div>
-              <div class="brand-title">Student Portal</div>
+              <div class="brand-main">Student Portal</div>
               <div class="brand-sub">Learning Dashboard</div>
             </div>
           </div>
 
-          <div class="topbar-right">
-            <div class="chip">Học tập</div>
-            <div class="chip">Bài kiểm tra</div>
+          <div class="top-actions">
+            <button class="pill">Học tập</button>
+            <button class="pill">Bài kiểm tra</button>
           </div>
-        </div>
+        </header>
 
-        <div class="main">
-          <div class="subject-landing">
-            <div class="home-card">
-              <div class="notice">✦ Nền tảng ôn thi mạnh mẽ và tiện ích</div>
-              <h1 class="landing-title">Chọn Môn Học Cần Ôn Tập</h1>
-              <p class="landing-sub">
-                Hệ thống học tập 2 cột thông minh với ngân hàng câu hỏi chuẩn hóa, giúp bạn ôn tập hiệu quả
-                và nắm vững kiến thức tương ứng.
-              </p>
+        <main class="main">
+          <h2 class="section-title">Các môn học</h2>
 
-              <div id="subjectGrid" class="subject-grid"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="subjectScreen" class="subject-page">
-        <div class="topbar">
-          <div class="subject-brand">
-            <div class="subject-pill" id="subjectPill"></div>
-            <div>
-              <div class="subject-name" id="subjectName"></div>
-              <div class="subject-meta" id="subjectMeta"></div>
-            </div>
-          </div>
-
-          <div class="toolbar-tabs" id="toolbarTabs"></div>
-        </div>
-
-        <div class="content-body">
-          <div id="subjectContent"></div>
-        </div>
+          <div id="subjectGrid" class="card-grid"></div>
+        </main>
       </div>
     </div>
 
-    <script src="questions.js"></script>
     <script>
-      const homeScreen = document.getElementById("homeScreen");
-      const subjectScreen = document.getElementById("subjectScreen");
-      const subjectGrid = document.getElementById("subjectGrid");
-      const subjectContent = document.getElementById("subjectContent");
-      const subjectPill = document.getElementById("subjectPill");
-      const subjectName = document.getElementById("subjectName");
-      const subjectMeta = document.getElementById("subjectMeta");
-      const toolbarTabs = document.getElementById("toolbarTabs");
-
-      let selectedSubjectId = "phap-luat";
-      let currentTab = "Luyện tập";
-
-      function showHome() {
-        homeScreen.style.display = "block";
-        subjectScreen.classList.remove("active");
-      }
-
-      function showSubject(subjectId) {
-        const subject = subjects.find(s => s.id === subjectId);
-        if (!subject) return;
-
-        selectedSubjectId = subjectId;
-        homeScreen.style.display = "none";
-        subjectScreen.classList.add("active");
-
-        subjectPill.textContent = subject.name.charAt(0).toUpperCase();
-        subjectName.textContent = subject.name;
-        subjectMeta.textContent = subject.badge;
-
-        renderTabs(subject);
-        renderSubjectContent(subject);
-      }
-
-      function renderTabs(subject) {
-        toolbarTabs.innerHTML = "";
-        const tabs = ["Luyện tập", "Thi thử", "Thẻ nhớ", "Tự luận"];
-        tabs.forEach(tab => {
-          const btn = document.createElement("button");
-          btn.className = "tab-btn" + (tab === currentTab ? " active" : "");
-          btn.textContent = tab;
-
-          btn.addEventListener("click", () => {
-            currentTab = tab;
-            renderTabs(subject);
-            renderSubjectContent(subject);
-          });
-
-          toolbarTabs.appendChild(btn);
-        });
-      }
-
-      function renderSubjectContent(subject) {
-        subjectContent.innerHTML = "";
-
-        if (currentTab === "Luyện tập") {
-          renderPracticeScreen(subject);
-          return;
+      const subjects = [
+        {
+          id: "math",
+          name: "Pháp Luật Đại Cương",
+          badge: "HCMUTE 2023 • 298 Trang",
+          description: "Nắm vững bản chất Nhà nước & Pháp luật, các ngành luật cơ bản (Dân sự, Hình sự, Lao động, Hôn nhân và Gia đình) và Luật Phòng chống tham nhũng.",
+          stats: [
+            { label: "Ngân hàng câu hỏi", value: "195 câu MCQ" },
+            { label: "Thẻ nhớ flashcards", value: "110 thẻ" },
+            { label: "Thi thử chuẩn", value: "40 câu / 60 phút" },
+            { label: "Chương giáo trình", value: "7 chương" }
+          ],
+          icon: "B"
+        },
+        {
+          id: "cplus",
+          name: "Lập trình C/C++",
+          badge: "Mới ra mắt • 9 Chương",
+          description: "Giải thích chương trình UTT & UIT, C/C++, cấu trúc dữ liệu, hướng đối tượng và môi trường lập trình.",
+          stats: [
+            { label: "Ngân hàng câu hỏi", value: "270 câu MCQ" },
+            { label: "Thẻ nhớ flashcards", value: "125 thẻ" },
+            { label: "Thi thử chuẩn", value: "45 câu / 90 phút" },
+            { label: "Chương giáo trình", value: "9 chương" }
+          ],
+          icon: "</>"
+        },
+        {
+          id: "database",
+          name: "Cơ sở dữ liệu",
+          badge: "Mới ra mắt • 8 Chương",
+          description: "Xây dựng nền tảng dữ liệu, mô hình quan hệ, SQL và quy trình quản lý dữ liệu hiệu quả.",
+          stats: [
+            { label: "Ngân hàng câu hỏi", value: "220 câu MCQ" },
+            { label: "Thẻ nhớ flashcards", value: "90 thẻ" },
+            { label: "Thi thử chuẩn", value: "38 câu / 60 phút" },
+            { label: "Chương giáo trình", value: "8 chương" }
+          ],
+          icon: "DB"
+        },
+        {
+          id: "network",
+          name: "Mạng máy tính",
+          badge: "Mới ra mắt • 6 Chương",
+          description: "Nền tảng mạng, giao thức, mô hình OSI và các nguyên tắc vận hành hệ thống mạng.",
+          stats: [
+            { label: "Ngân hàng câu hỏi", value: "180 câu MCQ" },
+            { label: "Thẻ nhớ flashcards", value: "80 thẻ" },
+            { label: "Thi thử chuẩn", value: "32 câu / 60 phút" },
+            { label: "Chương giáo trình", value: "6 chương" }
+          ],
+          icon: "NET"
         }
+      ];
 
-        if (currentTab === "Thi thử") {
-          renderExamScreen(subject);
-          return;
-        }
+      const grid = document.getElementById("subjectGrid");
 
-        if (currentTab === "Thẻ nhớ") {
-          renderFlashcardScreen(subject);
-          return;
-        }
+      function renderSubjects() {
+        grid.innerHTML = "";
 
-        renderEssayScreen(subject);
-      }
-
-      function renderPracticeScreen(subject) {
-        const activeChapter = subject.chapters[0];
-
-        const chapterTabs = subject.chapters.map((chapter, index) => {
-          const active = index === 0 ? "active" : "";
-          return `<button class="chapter-tab ${active}">${chapter.title}</button>`;
-        }).join("");
-
-        const question = subject.questions[0];
-        const answers = question.answers.map((answer) => {
-          return `<button class="answer">${answer.text}</button>`;
-        }).join("");
-
-        subjectContent.innerHTML = `
-          <div class="chapter-panel">
-            <div class="chapter-tabs">${chapterTabs}</div>
-
-            <div class="chapter-header">
-              <div class="chapter-title">
-                <strong>Chương 1</strong><br>
-                ${subject.chapters[0].title}
-              </div>
-              <div class="progress-pill">0/25 câu</div>
-            </div>
-          </div>
-
-          <div class="question-panel">
-            <div class="question-toolbar">
-              <div class="question-left">
-                <span class="question-badge">1</span>
-                <span>${question.id}</span>
-              </div>
-              <div class="question-left">
-                <span>Đề</span>
-              </div>
-            </div>
-
-            <div class="question-body">
-              <h3>${question.question}</h3>
-              ${answers}
-              <div class="result-box" id="resultBox"></div>
-            </div>
-          </div>
-
-          <div class="editor-shell">
-            <div class="editor-left">
-              <div class="editor-header">
-                <span>Code Editor</span>
-                <span>Monaco</span>
-              </div>
-              <div class="editor-body">
-#include &lt;stdio.h&gt;
-
-int main() {
-    printf("Hello C!");
-    return 0;
-}
-              </div>
-            </div>
-
-            <div class="editor-right">
-              <div class="editor-stat">
-                <div class="label">Bài tập</div>
-                <div class="value">1 / 25</div>
-              </div>
-              <div class="editor-stat">
-                <div class="label">Trạng thái</div>
-                <div class="value">Ready</div>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      function renderExamScreen(subject) {
-        subjectContent.innerHTML = `
-          <div style="display:flex;justify-content:center;align-items:center;min-height:60vh;">
-            <div style="background:rgba(17,29,49,0.92);border:1px solid var(--line);border-radius:20px;max-width:760px;width:100%;padding:30px 24px;box-shadow:var(--shadow);">
-              <div style="text-align:center;">
-                <div style="width:64px;height:64px;border-radius:16px;background:rgba(59,130,246,0.15);border:1px solid rgba(96,165,250,0.35);margin:0 auto 18px;display:flex;align-items:center;justify-content:center;color:#dfeeff;font-size:30px;">🎓</div>
-
-                <h2 style="font-size:42px;letter-spacing:-0.05em;margin:0 0 18px;">Đề Thi Thử Chuan Lập Trình C/C++ (HCMUTE)</h2>
-
-                <p style="font-size:18px;color:var(--muted);line-height:1.7;margin:0 0 18px;">
-                  Mô phỏng 100% hình thức thi kết thúc học phần: 45 câu trắc nghiệm • Thời gian làm bài 90 phút
-                </p>
-
-                <div style="display:grid;grid-template-columns:repeat(2,minmax(180px,1fr));gap:12px;margin:18px 0 24px;">
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:16px;">
-                    <div style="color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Đề chuẩn tuyển chọn</div>
-                    <div style="font-size:18px;font-weight:700;">45 câu hỏi tiêu biểu</div>
-                  </div>
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:16px;">
-                    <div style="color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;">Khuynh hướng</div>
-                    <div style="font-size:18px;font-weight:700;">Tăng dần</div>
-                  </div>
-                </div>
-
-                <div style="display:grid;grid-template-columns:repeat(3,minmax(130px,1fr));gap:12px;margin:18px 0 26px;">
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;">Chương 1: 3 câu</div>
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;">Chương 2: 5 câu</div>
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;">Chương 3: 6 câu</div>
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;">Chương 4: 5 câu</div>
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;">Chương 5: 6 câu</div>
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;">Chương 6: 8 câu</div>
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;">Chương 7: 5 câu</div>
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;">Chương 8: 4 câu</div>
-                  <div style="background:rgba(255,255,255,0.04);border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center;">Chương 9: 3 câu</div>
-                </div>
-
-                <button style="width:100%;background:linear-gradient(135deg,#3b82f6,#5b8ef7);color:white;border:none;border-radius:12px;padding:20px;font-weight:800;font-size:30px;cursor:pointer;">
-                  Bắt Đầu Làm Bài Thi Ngay →
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      function renderFlashcardScreen(subject) {
-        subjectContent.innerHTML = `
-          <div style="padding:20px 0;">
-            <h2 style="font-size:32px;margin:0 0 18px;">Flashcards</h2>
-            <div style="display:grid;grid-template-columns:repeat(2, minmax(250px, 1fr));gap:18px;">
-              <div style="background:rgba(17,29,49,0.9);border:1px solid var(--line);border-radius:18px;padding:18px;">
-                <div style="font-size:18px;color:var(--muted);margin-bottom:8px;">Khái niệm</div>
-                <div style="font-size:28px;font-weight:800;">Con trỏ là gì?</div>
-              </div>
-              <div style="background:rgba(17,29,49,0.9);border:1px solid var(--line);border-radius:18px;padding:18px;">
-                <div style="font-size:18px;color:var(--muted);margin-bottom:8px;">Định nghĩa</div>
-                <div style="font-size:20px;line-height:1.7;">Con trỏ là biến lưu địa chỉ của biến khác, cho phép truy cập và thao tác dữ liệu trực tiếp trong bộ nhớ.</div>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      function renderEssayScreen(subject) {
-        subjectContent.innerHTML = `
-          <div style="padding:20px 0;">
-            <h2 style="font-size:32px;margin:0 0 18px;">Tự luận</h2>
-            <div style="background:rgba(17,29,49,0.9);border:1px solid var(--line);border-radius:18px;padding:18px;">
-              <div style="font-size:18px;color:var(--muted);margin-bottom:10px;">Bài 1.1</div>
-              <div style="font-size:30px;font-weight:800;line-height:1.5;">
-                Trình bày khái niệm ngôn ngữ C và ưu điểm của nó trong lập trình hệ thống.
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      function renderHome() {
-        subjectGrid.innerHTML = "";
         subjects.forEach((subject) => {
           const card = document.createElement("div");
           card.className = "subject-card";
-          const firstChar = subject.name.charAt(0).toUpperCase();
 
           card.innerHTML = `
             <div class="subject-head">
-              <div class="subject-icon">${firstChar}</div>
+              <div class="subject-icon">${subject.icon}</div>
               <div class="subject-badge">${subject.badge}</div>
             </div>
-            <div class="subject-title">${subject.name}</div>
-            <div class="subject-desc">${subject.description}</div>
 
-            <div class="stats-grid">
-              ${subject.stats.slice(0, 2).map(stat => `
-                <div class="mini-stat">
-                  <div class="mini-stat-row">
-                    <div class="mini-stat-icon">${stat.icon}</div>
-                    <div class="mini-stat-label">${stat.label}</div>
+            <h3 class="subject-name">${subject.name}</h3>
+            <p class="subject-desc">${subject.description}</p>
+
+            <div class="stats">
+              ${subject.stats.map(stat => `
+                <div class="stat-box">
+                  <div class="stat-row">
+                    <div class="stat-bullet">${stat.label.charAt(0)}</div>
+                    <div class="stat-label">${stat.label}</div>
                   </div>
-                  <div class="mini-stat-value">${stat.value}</div>
+                  <div class="stat-value">${stat.value}</div>
                 </div>
               `).join("")}
             </div>
 
-            <button class="subject-cta">Vào ôn tập ${subject.name}</button>
+            <button class="cta">Vào ôn tập ${subject.name}</button>
           `;
-
-          card.addEventListener("click", () => {
-            showSubject(subject.id);
-          });
-
-          subjectGrid.appendChild(card);
+          grid.appendChild(card);
         });
       }
 
-      renderHome();
-      showSubject("phap-luat");
+      renderSubjects();
     </script>
   </body>
 </html>
