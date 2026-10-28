@@ -3,911 +3,355 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BTRan | C-Lang</title>
+    <title>Study Quiz Dashboard</title>
     <style>
-      :root {
-        --bg: #f8fafc;
-        --panel: #ffffff;
-        --panel-soft: #f1f5f9;
-        --surface: #eef6ff;
-        --text: #0f172a;
-        --muted: #475569;
-        --line: #e2e8f0;
-        --primary: #2563eb;
-        --primary-soft: #dbeafe;
-        --secondary: #0f766e;
-        --success: #16a34a;
-        --warning: #f59e0b;
-        --code-bg: #0b1120;
-        --code-text: #dbeafe;
-        --shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-      }
-
-      body.dark {
-        --bg: #020817;
-        --panel: #0f172a;
-        --panel-soft: #111827;
-        --surface: #0b1120;
-        --text: #e2e8f0;
-        --muted: #94a3b8;
-        --line: #1e293b;
-        --primary: #60a5fa;
-        --primary-soft: rgba(96, 165, 250, 0.12);
-        --secondary: #2dd4bf;
-        --success: #4ade80;
-        --warning: #fbbf24;
-        --code-bg: #020817;
-        --code-text: #dbeafe;
-        --shadow: 0 12px 28px rgba(2, 8, 23, 0.7);
-      }
-
       * {
         box-sizing: border-box;
       }
 
-      html {
-        scroll-behavior: smooth;
-      }
-
       body {
         margin: 0;
-        background: var(--bg);
-        color: var(--text);
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        line-height: 1.7;
-        letter-spacing: 0.01em;
-      }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      button, input {
-        font: inherit;
+        font-family: Arial, sans-serif;
+        background: #f8fafc;
+        color: #0f172a;
       }
 
       .app {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .topbar {
-        position: sticky;
-        top: 0;
-        z-index: 30;
-        height: 72px;
-        background: rgba(255,255,255,0.88);
-        border-bottom: 1px solid var(--line);
-        backdrop-filter: blur(10px);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 22px;
-      }
-
-      body.dark .topbar {
-        background: rgba(15, 23, 42, 0.9);
-      }
-
-      .brand-wrap {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .logo {
-        width: 38px;
-        height: 38px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--primary), #60a5fa);
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        box-shadow: 0 10px 18px rgba(37, 99, 235, 0.25);
-      }
-
-      .brand-text {
-        font-size: 1.05rem;
-        font-weight: 800;
-      }
-
-      .brand-sub {
-        display: block;
-        margin-top: 1px;
-        font-size: 11px;
-        color: var(--muted);
-        font-weight: 500;
-      }
-
-      .top-actions {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        flex-wrap: wrap;
-      }
-
-      .chip {
-        background: var(--panel);
-        color: var(--muted);
-        border: 1px solid var(--line);
-        border-radius: 999px;
-        padding: 8px 12px;
-        font-weight: 700;
-        font-size: 12px;
-      }
-
-      .icon-btn {
-        background: var(--panel);
-        border: 1px solid var(--line);
-        color: var(--text);
-        border-radius: 10px;
-        padding: 9px 10px;
-        cursor: pointer;
-        transition: 0.2s ease;
-      }
-
-      .icon-btn:hover {
-        transform: translateY(-1px);
-      }
-
-      .main {
-        display: grid;
-        grid-template-columns: 320px minmax(0, 1fr);
-        min-height: calc(100vh - 72px);
-      }
-
-      .sidebar {
-        background: var(--panel);
-        border-right: 1px solid var(--line);
-        padding: 18px 16px;
-        overflow-y: auto;
-      }
-
-      .sidebar-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 12px;
-      }
-
-      .sidebar-title {
-        margin: 0;
-        font-size: 12px;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: #64748b;
-      }
-
-      .sidebar-search {
-        position: relative;
-        margin-bottom: 16px;
-      }
-
-      .sidebar-search input {
-        width: 100%;
-        border: 1px solid var(--line);
-        background: var(--panel-soft);
-        color: var(--text);
-        border-radius: 12px;
-        padding: 10px 12px 10px 38px;
-        outline: none;
-      }
-
-      .search-icon {
-        position: absolute;
-        left: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .chapter {
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        margin-bottom: 14px;
+        max-width: 1100px;
+        margin: 40px auto;
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 20px;
         overflow: hidden;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
       }
 
-      .chapter-header {
-        width: 100%;
-        border: 0;
-        background: transparent;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 14px 12px;
-        text-align: left;
-        cursor: pointer;
-        color: var(--text);
+      .header {
+        background: linear-gradient(135deg, #eff6ff, #f8fafc);
+        border-bottom: 1px solid #e2e8f0;
+        padding: 22px 24px;
       }
 
-      .chapter-main {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        min-width: 0;
-        flex: 1;
-      }
-
-      .chapter-num {
-        width: 28px;
-        height: 28px;
-        border-radius: 10px;
-        background: var(--primary-soft);
-        color: var(--primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        font-size: 12px;
-        flex-shrink: 0;
-      }
-
-      .chapter-meta {
-        min-width: 0;
-      }
-
-      .chapter-title {
+      .header h1 {
         margin: 0;
-        font-size: 13px;
-        line-height: 1.5;
-        font-weight: 700;
+        font-size: 28px;
       }
 
-      .chapter-sub {
-        margin-top: 2px;
-        font-size: 10px;
-        color: var(--muted);
-      }
-
-      .caret {
-        color: var(--muted);
-        font-size: 14px;
-        flex-shrink: 0;
-      }
-
-      .chapter-body {
-        border-top: 1px solid var(--line);
-        padding: 12px;
-      }
-
-      .article {
-        background: #f8fafc;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        padding: 12px;
-        margin-bottom: 10px;
-      }
-
-      body.dark .article {
-        background: rgba(15, 23, 42, 0.7);
-      }
-
-      .article-head {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        gap: 8px;
-        margin-bottom: 10px;
-      }
-
-      .article-head h5 {
-        margin: 0;
-        font-size: 13px;
-        line-height: 1.5;
-      }
-
-      .tag {
-        font-size: 10px;
-        background: #e2e8f0;
+      .header p {
+        margin: 8px 0 0 0;
         color: #475569;
-        border-radius: 6px;
-        padding: 4px 6px;
-        white-space: nowrap;
       }
 
-      body.dark .tag {
-        background: #1e293b;
-        color: #cbd5e1;
-      }
-
-      .fix-text,
-      .fix-text p,
-      .fix-text li,
-      .fix-text span,
-      .fix-text div,
-      .fix-text ul,
-      .fix-text ol,
-      .fix-text pre,
-      .fix-text code,
-      .fix-text h1,
-      .fix-text h2,
-      .fix-text h3,
-      .fix-text h4,
-      .fix-text h5,
-      .fix-text h6 {
-        white-space: pre-wrap;
-        overflow-wrap: anywhere;
-        word-break: break-word;
-      }
-
-      .content {
-        color: var(--text);
-        font-size: 14px;
-        line-height: 1.8;
-      }
-
-      .content p {
-        margin: 0 0 12px 0;
-      }
-
-      .content p:last-child {
-        margin-bottom: 0;
-      }
-
-      .keypoints {
-        margin-top: 12px;
-        padding-top: 12px;
-        border-top: 1px dashed var(--line);
-      }
-
-      .keypoints-title {
-        margin: 0 0 8px 0;
-        font-size: 11px;
-        font-weight: 800;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      .keypoints ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-      }
-
-      .keypoints li {
+      .tabs {
         display: flex;
-        align-items: flex-start;
-        gap: 8px;
-        margin-bottom: 8px;
-        font-size: 12px;
-        color: var(--text);
-      }
-
-      .dot {
-        width: 14px;
-        height: 14px;
-        border-radius: 50%;
-        background: #dcfce7;
-        color: var(--success);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 10px;
-        font-weight: 800;
-        flex-shrink: 0;
-        margin-top: 2px;
-      }
-
-      .codebox {
-        margin-top: 14px;
-        background: var(--code-bg);
-        border: 1px solid #1e293b;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: var(--shadow);
-      }
-
-      .codehead {
-        background: rgba(15, 23, 42, 0.95);
-        border-bottom: 1px solid rgba(255,255,255,0.09);
-        color: #cbd5e1;
-        font-size: 10px;
-        font-weight: 700;
-        padding: 8px 12px;
-        display: flex;
-        justify-content: space-between;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .codebody {
-        margin: 0;
-        padding: 14px;
-        background: var(--code-bg);
-        color: var(--code-text);
-        font-size: 12px;
-        line-height: 1.7;
-        white-space: pre-wrap;
-        overflow-x: auto;
-        overflow-wrap: anywhere;
-        word-break: break-word;
-      }
-
-      .workspace {
-        background: var(--bg);
-        padding: 28px 26px 40px;
-      }
-
-      .workspace-panel {
-        max-width: 980px;
-        margin: 0 auto;
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: 22px;
-        box-shadow: var(--shadow);
-        overflow: hidden;
-      }
-
-      .tabbar {
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        gap: 10px;
         flex-wrap: wrap;
-        padding: 16px 18px 0;
+        padding: 18px 24px 0;
+        background: #f8fafc;
+        border-bottom: 1px solid #e2e8f0;
       }
 
       .tab {
-        border: 1px solid var(--line);
-        background: var(--panel-soft);
-        color: var(--muted);
+        background: white;
+        border: 1px solid #e2e8f0;
+        color: #475569;
         border-radius: 10px;
-        padding: 9px 14px;
-        font-weight: 700;
+        padding: 10px 16px;
         cursor: pointer;
+        font-weight: 700;
       }
 
       .tab.active {
-        background: var(--primary-soft);
-        color: var(--primary);
-        border-color: #bfdbfe;
+        background: #dbeafe;
+        color: #1d4ed8;
+        border-color: #93c5fd;
       }
 
-      .tab-panel {
+      .panel {
         display: none;
-        padding: 20px 18px 22px;
+        padding: 26px 24px 30px;
       }
 
-      .tab-panel.active {
+      .panel.active {
         display: block;
       }
 
-      .panel-content {
-        max-width: 900px;
-        margin: 0 auto;
+      .subject-title {
+        font-size: 26px;
+        font-weight: 800;
+        margin-bottom: 22px;
       }
 
-      .panel-content h1 {
-        margin: 0 0 18px;
-        font-size: clamp(28px, 4vw, 42px);
-        line-height: 1.2;
+      .question-box {
+        background: #fff;
+        border: 1px solid #e2e8f0;
+        border-radius: 16px;
+        padding: 18px 18px 16px;
+        margin-bottom: 22px;
       }
 
-      .panel-content p {
-        font-size: 16px;
-        line-height: 1.8;
-        margin: 0 0 14px;
-      }
-
-      .badge-row {
-        display: flex;
-        gap: 8px;
-        margin-bottom: 16px;
-        flex-wrap: wrap;
-      }
-
-      .badge {
-        background: var(--primary-soft);
-        color: var(--primary);
-        border: 1px solid #bfdbfe;
-        border-radius: 999px;
-        font-size: 12px;
-        font-weight: 700;
-        padding: 7px 12px;
-      }
-
-      .feature-box {
-        margin-top: 22px;
-        background: #f8fafc;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 20px;
-      }
-
-      body.dark .feature-box {
-        background: rgba(15,23,42,0.7);
-      }
-
-      .feature-box h3 {
-        margin: 0 0 10px 0;
+      .question {
         font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 16px;
       }
 
-      .hidden {
-        display: none !important;
+      .answers {
+        display: grid;
+        gap: 12px;
       }
 
-      @media (max-width: 900px) {
-        .main {
-          grid-template-columns: 1fr;
+      .answer {
+        width: 100%;
+        text-align: left;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        background: #f8fafc;
+        padding: 14px 16px;
+        cursor: pointer;
+        font-size: 16px;
+        color: #0f172a;
+      }
+
+      .answer:hover {
+        border-color: #93c5fd;
+        background: #eff6ff;
+      }
+
+      .answer.correct {
+        background: #dcfce7;
+        border-color: #86efac;
+        color: #166534;
+      }
+
+      .answer.wrong {
+        background: #fee2e2;
+        border-color: #fca5a5;
+        color: #991b1b;
+      }
+
+      .result {
+        display: none;
+        margin-top: 16px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        font-weight: 700;
+        border: 1px solid #e2e8f0;
+      }
+
+      .result.show {
+        display: block;
+      }
+
+      @media (max-width: 700px) {
+        .header {
+          padding: 18px 16px;
         }
 
-        .sidebar {
-          border-right: none;
-          border-bottom: 1px solid var(--line);
+        .header h1 {
+          font-size: 24px;
         }
 
-        .workspace {
-          padding: 18px 14px 30px 14px;
+        .tabs {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .panel {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .question {
+          font-size: 18px;
         }
       }
     </style>
   </head>
   <body>
     <div class="app">
-      <header class="topbar">
-        <div class="brand-wrap">
-          <div class="logo">C</div>
-          <div>
-            <div class="brand-text">BTRan</div>
-            <span class="brand-sub">C-Lang / HCMUTE</span>
-          </div>
-        </div>
-
-        <div class="top-actions">
-          <div class="chip">Ngôn ngữ C/C++</div>
-          <div class="chip">9 chương</div>
-          <button id="themeToggle" class="icon-btn" aria-label="Dark mode">🌙</button>
-          <button id="drawerToggle" class="icon-btn" aria-label="Open drawer">☰</button>
-        </div>
-      </header>
-
-      <div class="main">
-        <aside id="drawer" class="sidebar">
-          <div class="sidebar-header">
-            <h2 class="sidebar-title">Lý thuyết</h2>
-          </div>
-
-          <div class="sidebar-search">
-            <span class="search-icon">⌕</span>
-            <input id="searchInput" type="text" placeholder="Tìm khái niệm..." />
-          </div>
-
-          <div class="chapter">
-            <button class="chapter-header" data-target="chap1">
-              <div class="chapter-main">
-                <div class="chapter-num">1</div>
-                <div class="chapter-meta">
-                  <p class="chapter-title">Tổng quan về C & Môi trường</p>
-                  <div class="chapter-sub">UTT: 12 • HCMUTE: 15</div>
-                </div>
-              </div>
-              <span class="caret">▾</span>
-            </button>
-
-            <div class="chapter-body" id="chap1">
-              <div class="article">
-                <div class="article-head">
-                  <h5>1.1 Khái niệm ngôn ngữ C</h5>
-                  <span class="tag">UTT p.12</span>
-                </div>
-
-                <div class="content fix-text">
-                  <p>Ngôn ngữ C là ngôn ngữ lập trình bậc trung, có tốc độ thực thi nhanh, khả năng kiểm soát bộ nhớ mạnh mẽ và được dùng nhiều trong hệ thống, phần mềm nhúng, và ứng dụng hiệu năng cao.</p>
-                  <p>C là ngôn ngữ có cú pháp gọn, ít ẩn dụ hơn so với các ngôn ngữ hiện đại, nhưng lại cực kỳ mạnh vì cho phép lập trình ở mức thấp mà vẫn kiểm soát cấu trúc dữ liệu rõ ràng.</p>
-                </div>
-
-                <div class="keypoints">
-                  <p class="keypoints-title">Điểm cốt lõi</p>
-                  <ul>
-                    <li><span class="dot">✓</span><span>Ngôn ngữ C có tính cấu trúc, hướng thủ tục.</span></li>
-                    <li><span class="dot">✓</span><span>Khả năng quản lý bộ nhớ trực tiếp bằng con trỏ.</span></li>
-                    <li><span class="dot">✓</span><span>Phổ biến trong hệ thống, nhúng, driver, và engine game.</span></li>
-                  </ul>
-                </div>
-
-                <div class="codebox">
-                  <div class="codehead">
-                    <span>Ví dụ</span>
-                    <span>main.c</span>
-                  </div>
-                  <pre class="codebody">#include &lt;stdio.h&gt;
-
-int main() {
-    printf("Xin chao C!");
-    return 0;
-}</pre>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="chapter">
-            <button class="chapter-header" data-target="chap2">
-              <div class="chapter-main">
-                <div class="chapter-num">2</div>
-                <div class="chapter-meta">
-                  <p class="chapter-title">Kiểu dữ liệu cơ bản & Nhập/Xuất</p>
-                  <div class="chapter-sub">UTT: 24 • HCMUTE: 30</div>
-                </div>
-              </div>
-              <span class="caret">▾</span>
-            </button>
-
-            <div class="chapter-body" id="chap2">
-              <div class="article">
-                <div class="article-head">
-                  <h5>2.1 Kiểu số nguyên và thực</h5>
-                  <span class="tag">UTT p.24</span>
-                </div>
-
-                <div class="content fix-text">
-                  <p>Trong C, các kiểu dữ liệu cơ bản bao gồm int, float, double, char, cùng với các kiểu unsigned, long, short để phù hợp với mục đích lưu trữ và xử lý.</p>
-                  <p>Việc chọn kiểu dữ liệu đúng không chỉ giúp bộ nhớ hợp lý mà còn tránh các lỗi tràn số, sai lệch dữ liệu, và gây nguy hiểm khi xử lý phép toán trên biến.</p>
-                </div>
-
-                <div class="keypoints">
-                  <p class="keypoints-title">Điểm cốt lõi</p>
-                  <ul>
-                    <li><span class="dot">✓</span><span>int dành cho số nguyên; float/double dành cho số thực.</span></li>
-                    <li><span class="dot">✓</span><span>char được dùng cho ký tự và mã ASCII.</span></li>
-                    <li><span class="dot">✓</span><span>scanf/printf là cách nhập/xuất chuẩn trong C.</span></li>
-                  </ul>
-                </div>
-
-                <div class="codebox">
-                  <div class="codehead">
-                    <span>Ví dụ</span>
-                    <span>input.c</span>
-                  </div>
-                  <pre class="codebody">#include &lt;stdio.h&gt;
-
-int main() {
-    int a = 10;
-    float b = 3.5f;
-    printf("a = %d, b = %.2f\\n", a, b);
-    return 0;
-}</pre>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="chapter">
-            <button class="chapter-header" data-target="chap3">
-              <div class="chapter-main">
-                <div class="chapter-num">3</div>
-                <div class="chapter-meta">
-                  <p class="chapter-title">Cấu trúc điều khiển</p>
-                  <div class="chapter-sub">UTT: 47 • HCMUTE: 55</div>
-                </div>
-              </div>
-              <span class="caret">▾</span>
-            </button>
-
-            <div class="chapter-body" id="chap3">
-              <div class="article">
-                <div class="article-head">
-                  <h5>3.1 if, else, switch</h5>
-                  <span class="tag">UTT p.47</span>
-                </div>
-
-                <div class="content fix-text">
-                  <p>Điều kiện là cơ sở để chương trình có thể rẽ nhánh theo trạng thái của biến, dữ liệu đầu vào hoặc điều kiện nghiệp vụ.</p>
-                  <p>switch thường thích hợp với các trường hợp lựa chọn nhiều nhánh rõ ràng, còn if/else được dùng linh hoạt hơn trong các biểu thức logic phức tạp.</p>
-                </div>
-
-                <div class="keypoints">
-                  <p class="keypoints-title">Điểm cốt lõi</p>
-                  <ul>
-                    <li><span class="dot">✓</span><span>if/else xử lý điều kiện.</span></li>
-                    <li><span class="dot">✓</span><span>switch xử lý nhiều nhánh rõ ràng.</span></li>
-                    <li><span class="dot">✓</span><span>Không nên lồng quá sâu nếu không cần thiết.</span></li>
-                  </ul>
-                </div>
-
-                <div class="codebox">
-                  <div class="codehead">
-                    <span>Ví dụ</span>
-                    <span>branch.c</span>
-                  </div>
-                  <pre class="codebody">#include &lt;stdio.h&gt;
-
-int main() {
-    int score = 70;
-    if (score >= 80) {
-        printf("Gioi\\n");
-    } else if (score >= 60) {
-        printf("Kha\\n");
-    } else {
-        printf("Yeu\\n");
-    }
-    return 0;
-}</pre>
-                </div>
-              </div>
-            </div>
-          </div>
-        </aside>
-
-        <main class="workspace">
-          <div class="workspace-panel">
-            <div class="tabbar">
-              <button class="tab active" data-tab="practice">Luyện tập</button>
-              <button class="tab" data-tab="exam">Thi thử</button>
-              <button class="tab" data-tab="flashcards">Flashcards</button>
-              <button class="tab" data-tab="essays">Tự luận</button>
-            </div>
-
-            <div class="tab-panel active" data-panel="practice">
-              <div class="panel-content fix-text">
-                <div class="badge-row">
-                  <span class="badge">Cơ bản</span>
-                  <span class="badge">Mảng</span>
-                  <span class="badge">Hàm</span>
-                </div>
-
-                <h1>Ngôn ngữ lập trình C/C++</h1>
-
-                <p>C là ngôn ngữ lập trình có tính cấu trúc, hiệu suất cao và rất quan trọng trong các môn kỹ thuật. Người học cần thành thạo lập trình tuần tự, điều kiện, vòng lặp, hàm, mảng, con trỏ và thao tác tệp.</p>
-
-                <p>Điểm đặc biệt của C là khả năng làm việc ở tầng thấp, cho phép điều khiển bộ nhớ và xây dựng các ứng dụng hệ thống, trình điều khiển và phần mềm nhúng. Vì vậy, cần chú ý đến định dạng biến, con trỏ, và logic rẽ nhánh.</p>
-
-                <div class="feature-box">
-                  <h3>Ví dụ tổng hợp</h3>
-                  <p>Đoạn mã dưới đây minh họa cách tính tổng số chẵn từ 1 tới n:</p>
-
-                  <div class="codebox" style="margin-top: 18px;">
-                    <div class="codehead">
-                      <span>Ví dụ</span>
-                      <span>sum_even.c</span>
-                    </div>
-                    <pre class="codebody">#include &lt;stdio.h&gt;
-
-int sumEven(int n) {
-    int total = 0;
-    for (int i = 1; i &lt;= n; i++) {
-        if (i % 2 == 0) {
-            total += i;
-        }
-    }
-    return total;
-}
-
-int main() {
-    int x = 10;
-    printf("Tong so chan tu 1 den %d la: %d\\n", x, sumEven(x));
-    return 0;
-}</pre>
-                  </div>
-                </div>
-
-                <p>Để học tốt C, nên đọc bài từng chương, viết lại ví dụ bằng tay và làm nhiều bài tập thực hành. Mỗi thao tác sẽ giúp bạn làm quen với cú pháp, tính đúng sai, và kỹ năng debug.</p>
-              </div>
-            </div>
-
-            <div class="tab-panel" data-panel="exam">
-              <div class="panel-content fix-text">
-                <div class="badge-row">
-                  <span class="badge">45 câu</span>
-                  <span class="badge">90 phút</span>
-                  <span class="badge">Thử năng lực</span>
-                </div>
-
-                <h1>Thi thử lập trình C</h1>
-
-                <p>Trong phần thi thử, bạn sẽ làm quen với dạng câu hỏi về kiểu dữ liệu, phạm vi biến, vòng lặp, mảng, con trỏ và tối ưu code. Mục tiêu là kiểm tra khả năng đọc hiểu logic và viết mã đúng trình tự.</p>
-
-                <p>Để đạt hiệu quả, hãy luyện tập từng phần nhỏ trước khi thi. Đặc biệt, bạn nên tập trung vào việc kiểm tra điều kiện rẽ nhánh, vòng lặp và cách sử dụng con trỏ đúng chuẩn.</p>
-
-                <div class="feature-box">
-                  <h3>Ví dụ câu hỏi</h3>
-                  <p>Hãy xác định đầu ra của đoạn code sau:</p>
-
-                  <div class="codebox" style="margin-top: 18px;">
-                    <div class="codehead">
-                      <span>Câu hỏi</span>
-                      <span>Q1</span>
-                    </div>
-                    <pre class="codebody">#include &lt;stdio.h&gt;
-
-int main() {
-    int x = 5;
-    int y = 2;
-    printf("%d\\n", x / y);
-    return 0;
-}</pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="tab-panel" data-panel="flashcards">
-              <div class="panel-content fix-text">
-                <div class="badge-row">
-                  <span class="badge">125 thẻ</span>
-                  <span class="badge">Ghi nhớ nhanh</span>
-                  <span class="badge">Ôn tập lặp lại</span>
-                </div>
-
-                <h1>Flashcards C/C++</h1>
-
-                <p>Flashcards giúp học viên ghi nhớ các khái niệm trọng tâm như biến, con trỏ, mảng, kiểu dữ liệu, vòng lặp, cấu trúc và cú pháp hàm. Học bằng thẻ sẽ tăng hiệu quả ôn tập và giảm nguy cơ quên.</p>
-
-                <p>Đối với người học C, cách học hiệu quả nhất là kết hợp thẻ từ khóa với ví dụ thật. Ví dụ: “Con trỏ là biến lưu địa chỉ của biến khác”, “char lưu 1 byte”, “double có độ chính xác cao hơn float”.</p>
-              </div>
-            </div>
-
-            <div class="tab-panel" data-panel="essays">
-              <div class="panel-content fix-text">
-                <div class="badge-row">
-                  <span class="badge">32 bài</span>
-                  <span class="badge">Monaco Editor</span>
-                  <span class="badge">Bài tập thực hành</span>
-                </div>
-
-                <h1>Tự luận lập trình C</h1>
-
-                <p>Phần tự luận tập trung vào kỹ năng viết mã, giải quyết bài toán, và code theo logic rõ ràng. Bạn cần xây dựng chương trình từ đầu, xử lý đầu vào, đầu ra, kiểm tra điều kiện và chạy thử.</p>
-
-                <p>Học qua bài tự luận giúp bạn rèn tư duy thuật toán, kiểm soát lỗi, và cải thiện khả năng phân tích vấn đề theo hướng cấu trúc hơn.</p>
-              </div>
-            </div>
-          </div>
-        </main>
+      <div class="header">
+        <h1>Study Quiz</h1>
+        <p>Web có thể mở rộng cho nhiều môn học</p>
       </div>
+
+      <div id="tabs" class="tabs"></div>
+      <div id="panels"></div>
     </div>
 
     <script>
-      const body = document.body;
-      const themeToggle = document.getElementById('themeToggle');
-      const drawerToggle = document.getElementById('drawerToggle');
-      const drawer = document.getElementById('drawer');
-      const searchInput = document.getElementById('searchInput');
-
-      themeToggle.addEventListener('click', () => {
-        body.classList.toggle('dark');
-        themeToggle.textContent = body.classList.contains('dark') ? '☀️' : '🌙';
-      });
-
-      drawerToggle.addEventListener('click', () => {
-        drawer.classList.toggle('hidden');
-      });
-
-      document.querySelectorAll('.tab').forEach(button => {
-        button.addEventListener('click', () => {
-          document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
-          document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
-          button.classList.add('active');
-          document.querySelector('[data-panel="' + button.dataset.tab + '"]').classList.add('active');
-        });
-      });
-
-      document.querySelectorAll('.chapter-header').forEach(button => {
-        const target = document.getElementById(button.dataset.target);
-        if (target) {
-          button.addEventListener('click', () => {
-            target.classList.toggle('hidden');
-          });
+      // Đây là nơi bạn thêm môn học mới
+      const subjects = [
+        {
+          id: "c-lang",
+          name: "Lập trình C",
+          questions: [
+            {
+              question: "Câu nào đúng về C?",
+              answers: [
+                { text: "A. C chỉ chạy trên web", correct: false },
+                { text: "B. C là ngôn ngữ lập trình hệ thống mạnh và nhanh", correct: true },
+                { text: "C. C không có biến", correct: false },
+                { text: "D. C không có vòng lặp", correct: false }
+              ]
+            },
+            {
+              question: "Kiểu dữ liệu nào dùng cho số thực trong C?",
+              answers: [
+                { text: "A. int", correct: false },
+                { text: "B. float", correct: true },
+                { text: "C. char", correct: false },
+                { text: "D. bool", correct: false }
+              ]
+            },
+            {
+              question: "Hàm nào dùng để in ra màn hình trong C?",
+              answers: [
+                { text: "A. scanf", correct: false },
+                { text: "B. if", correct: false },
+                { text: "C. printf", correct: true },
+                { text: "D. for", correct: false }
+              ]
+            }
+          ]
+        },
+        {
+          id: "law",
+          name: "Pháp luật",
+          questions: [
+            {
+              question: "Hiến pháp là gì?",
+              answers: [
+                { text: "A. Luật dân sự", correct: false },
+                { text: "B. Luật cơ bản của Nhà nước", correct: true },
+                { text: "C. Bộ luật hình sự", correct: false },
+                { text: "D. Quy định công ty", correct: false }
+              ]
+            },
+            {
+              question: "Nội dung quyền công dân thường liên quan đến?",
+              answers: [
+                { text: "A. Quyền và nghĩa vụ của công dân", correct: true },
+                { text: "B. Chỉ quyền sở hữu nhà", correct: false },
+                { text: "C. Chỉ nghĩa vụ thuế", correct: false },
+                { text: "D. Chỉ quyền học tập", correct: false }
+              ]
+            }
+          ]
+        },
+        {
+          id: "math",
+          name: "Toán học",
+          questions: [
+            {
+              question: "2 + 2 = ?",
+              answers: [
+                { text: "A. 3", correct: false },
+                { text: "B. 4", correct: true },
+                { text: "C. 5", correct: false },
+                { text: "D. 6", correct: false }
+              ]
+            }
+          ]
         }
-      });
+      ];
 
-      searchInput.addEventListener('input', function () {
-        const term = this.value.trim().toLowerCase();
+      const tabsEl = document.getElementById("tabs");
+      const panelsEl = document.getElementById("panels");
 
-        document.querySelectorAll('.chapter').forEach(chapter => {
-          const text = chapter.textContent.toLowerCase();
-          chapter.style.display = text.includes(term) ? '' : 'none';
+      function renderSubjectTabs() {
+        subjects.forEach((subject, index) => {
+          const tab = document.createElement("button");
+          tab.className = "tab " + (index === 0 ? "active" : "");
+          tab.textContent = subject.name;
+          tab.dataset.target = subject.id;
+          tab.addEventListener("click", () => {
+            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+            document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+            tab.classList.add("active");
+            document.getElementById(subject.id).classList.add("active");
+          });
+          tabsEl.appendChild(tab);
         });
-      });
+      }
+
+      function renderPanels() {
+        subjects.forEach((subject, subjectIndex) => {
+          const panel = document.createElement("div");
+          panel.id = subject.id;
+          panel.className = "panel " + (subjectIndex === 0 ? "active" : "");
+
+          const title = document.createElement("div");
+          title.className = "subject-title";
+          title.textContent = subject.name;
+          panel.appendChild(title);
+
+          subject.questions.forEach((question, qIndex) => {
+            const questionBox = document.createElement("div");
+            questionBox.className = "question-box";
+
+            const q = document.createElement("div");
+            q.className = "question";
+            q.textContent = `${qIndex + 1}. ${question.question}`;
+            questionBox.appendChild(q);
+
+            const answersWrap = document.createElement("div");
+            answersWrap.className = "answers";
+
+            question.answers.forEach(answer => {
+              const btn = document.createElement("button");
+              btn.className = "answer";
+              btn.type = "button";
+              btn.textContent = answer.text;
+
+              btn.addEventListener("click", () => {
+                const allAnswers = Array.from(btn.parentElement.querySelectorAll(".answer"));
+                allAnswers.forEach(item => item.classList.remove("correct", "wrong"));
+
+                const result = btn.parentElement.parentElement.querySelector(".result");
+
+                if (answer.correct) {
+                  btn.classList.add("correct");
+                  result.textContent = "Đúng rồi! Bạn chọn đáp án chính xác.";
+                  result.style.background = "#dcfce7";
+                  result.style.borderColor = "#86efac";
+                  result.style.color = "#166534";
+                } else {
+                  btn.classList.add("wrong");
+
+                  const correctAnswer = question.answers.find(a => a.correct);
+                  allAnswers.forEach(item => {
+                    if (item.textContent.includes(correctAnswer.text.split(".")[1].trim())) {
+                      item.classList.add("correct");
+                    }
+                  });
+
+                  result.textContent = "Sai rồi! Đáp án đúng là: " + correctAnswer.text;
+                  result.style.background = "#fee2e2";
+                  result.style.borderColor = "#fca5a5";
+                  result.style.color = "#991b1b";
+                }
+
+                result.classList.add("show");
+              });
+
+              answersWrap.appendChild(btn);
+            });
+
+            const result = document.createElement("div");
+            result.className = "result";
+            questionBox.appendChild(answersWrap);
+            questionBox.appendChild(result);
+
+            panel.appendChild(questionBox);
+          });
+
+          panelsEl.appendChild(panel);
+        });
+      }
+
+      renderSubjectTabs();
+      renderPanels();
     </script>
   </body>
 </html>
