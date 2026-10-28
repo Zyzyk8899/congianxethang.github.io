@@ -6,294 +6,660 @@
     <title>Student Portal</title>
     <style>
       :root {
-        --bg: #dfe3e8;
-        --panel: #f3f5f7;
-        --white: #ffffff;
-        --text: #1b2430;
-        --muted: #57657a;
-        --line: #d7dfe7;
-        --blue: #2f6ef5;
-        --blue-2: #5a8dff;
-        --blue-soft: #eaf1ff;
-        --shadow: 0 12px 26px rgba(27, 36, 48, 0.08);
+        --bg: #020d1d;
+        --bg-2: #071a2f;
+        --surface: #0c1b2d;
+        --surface-2: #12273f;
+        --panel: #101d30;
+        --panel-2: #152c47;
+        --panel-3: #1d3351;
+        --line: rgba(148, 163, 184, 0.18);
+        --text: #edf5ff;
+        --muted: #a7b8d4;
+        --blue: #3b82f6;
+        --blue-2: #5b8ef7;
+        --green: #2dd4bf;
+        --purple: #8b5cf6;
+        --orange: #f59e0b;
+        --shadow: 0 18px 40px rgba(2, 8, 23, 0.7);
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       html, body {
         margin: 0;
+        min-height: 100vh;
         background: var(--bg);
-        font-family: "Segoe UI", Arial, sans-serif;
         color: var(--text);
+        font-family: "Segoe UI", Arial, sans-serif;
       }
 
       body {
-        min-height: 100vh;
-        padding: 26px;
+        padding: 24px;
       }
 
-      .page {
-        max-width: 1280px;
+      .app {
+        max-width: 1400px;
         margin: 0 auto;
-        background: transparent;
-      }
-
-      .shell {
-        background: rgba(255,255,255,0.2);
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        overflow: hidden;
+        min-height: calc(100vh - 48px);
       }
 
       .topbar {
+        background: rgba(9, 18, 30, 0.96);
+        border: 1px solid var(--line);
+        border-radius: 18px 18px 0 0;
+        height: 72px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(255,255,255,0.5);
-        border: 1px solid var(--line);
-        border-radius: 20px;
-        padding: 20px 24px;
-        box-shadow: var(--shadow);
-      }
-
-      .brand {
-        display: flex;
-        align-items: center;
+        padding: 0 18px;
         gap: 16px;
       }
 
-      .logo {
-        width: 52px;
-        height: 52px;
-        border-radius: 16px;
+      .brand-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        width: 28px;
+        height: 28px;
+        border-radius: 10px;
         background: linear-gradient(135deg, var(--blue), var(--blue-2));
         display: flex;
         align-items: center;
         justify-content: center;
-        color: white;
         font-weight: 800;
-        font-size: 26px;
       }
 
-      .brand-main {
-        font-size: clamp(28px, 3vw, 44px);
+      .brand-title {
+        font-size: 18px;
         font-weight: 800;
-        letter-spacing: -0.05em;
+        color: var(--text);
       }
 
       .brand-sub {
-        margin-top: 6px;
-        font-size: clamp(18px, 1.8vw, 28px);
+        font-size: 12px;
         color: var(--muted);
-        font-weight: 500;
       }
 
-      .top-actions {
+      .topbar-right {
         display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px;
       }
 
-      .pill {
+      .chip {
+        background: rgba(255,255,255,0.04);
         border: 1px solid var(--line);
-        background: rgba(255,255,255,0.35);
-        color: var(--text);
         border-radius: 999px;
-        padding: 12px 20px;
-        font-size: 18px;
-        font-weight: 600;
-        cursor: pointer;
+        padding: 7px 12px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
       }
 
-      .main {
-        padding: 26px 0 0;
+      .screen {
+        display: none;
       }
 
-      .section-title {
-        font-size: clamp(28px, 3vw, 50px);
-        font-weight: 800;
-        letter-spacing: -0.04em;
-        margin: 0 0 18px 18px;
+      .screen.active {
+        display: block;
       }
 
-      .card-grid {
+      .home-panel {
+        background: linear-gradient(180deg, rgba(17,29,49,0.9), rgba(17,29,49,0.96));
+        border: 1px solid var(--line);
+        border-radius: 0 0 18px 18px;
+        padding: 26px 24px 30px;
+        min-height: calc(100vh - 120px);
+      }
+
+      .hero {
+        position: relative;
+        padding: 18px 18px 8px;
+      }
+
+      .hero-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(59,130,246,0.12);
+        border: 1px solid rgba(96,165,250,0.35);
+        border-radius: 999px;
+        padding: 8px 16px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #dfeeff;
+      }
+
+      .hero h1 {
+        margin: 18px 0 12px;
+        font-size: clamp(38px, 3.4vw, 68px);
+        line-height: 1.08;
+        letter-spacing: -0.06em;
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 980px;
+        color: var(--muted);
+        font-size: clamp(18px, 1.7vw, 30px);
+        line-height: 1.6;
+      }
+
+      .subject-grid {
+        margin-top: 26px;
         display: grid;
-        grid-template-columns: repeat(2, minmax(320px, 1fr));
-        gap: 20px;
-        padding: 0 18px 18px;
+        grid-template-columns: repeat(2, minmax(300px, 1fr));
+        gap: 22px;
       }
 
       .subject-card {
-        background: rgba(255,255,255,0.42);
+        background: linear-gradient(180deg, rgba(22,35,55,0.92), rgba(17,29,49,0.85));
         border: 1px solid var(--line);
-        border-radius: 24px;
-        padding: 20px;
-        min-height: 310px;
+        border-radius: 20px;
+        padding: 18px 18px 16px;
         box-shadow: var(--shadow);
         cursor: pointer;
-        transition: 0.2s ease;
+        transition: transform 0.2s ease, border-color 0.2s ease;
       }
 
       .subject-card:hover {
         transform: translateY(-3px);
+        border-color: rgba(96,165,250,0.55);
       }
 
       .subject-head {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 18px;
+        margin-bottom: 16px;
       }
 
       .subject-icon {
-        width: 64px;
-        height: 64px;
-        border-radius: 18px;
-        background: linear-gradient(135deg, var(--blue-soft), #edf4ff);
-        border: 1px solid rgba(90,141,255,0.2);
+        width: 54px;
+        height: 54px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(59,130,246,0.08));
+        border: 1px solid rgba(96,165,250,0.38);
         display: flex;
         align-items: center;
         justify-content: center;
+        color: var(--blue);
         font-size: 28px;
         font-weight: 800;
-        color: var(--blue);
       }
 
       .subject-badge {
-        background: rgba(47,110,245,0.08);
-        border: 1px solid rgba(47,110,245,0.2);
+        background: rgba(59,130,246,0.12);
+        border: 1px solid rgba(96,165,250,0.3);
         border-radius: 999px;
         padding: 8px 12px;
-        color: var(--blue);
-        font-size: 13px;
+        color: #dfeeff;
+        font-size: 12px;
         font-weight: 700;
       }
 
-      .subject-name {
-        font-size: clamp(28px, 2vw, 42px);
+      .subject-title {
+        font-size: clamp(26px, 2vw, 42px);
         font-weight: 800;
         letter-spacing: -0.04em;
-        margin: 0 0 12px;
+        margin: 12px 0 8px;
       }
 
       .subject-desc {
         color: var(--muted);
         font-size: 18px;
         line-height: 1.6;
-        margin: 0 0 22px;
+        margin: 0 0 20px;
       }
 
-      .stats {
+      .stats-grid {
         display: grid;
-        grid-template-columns: repeat(2, minmax(170px, 1fr));
+        grid-template-columns: repeat(2, minmax(160px, 1fr));
         gap: 12px;
       }
 
-      .stat-box {
-        background: rgba(255,255,255,0.34);
+      .mini-stat {
+        background: rgba(255,255,255,0.04);
         border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 12px 14px;
-        min-height: 100px;
+        border-radius: 14px;
+        padding: 12px 12px 10px;
+        min-height: 92px;
       }
 
-      .stat-row {
+      .mini-stat-row {
         display: flex;
         align-items: center;
         gap: 8px;
-        margin-bottom: 10px;
+        margin-bottom: 8px;
       }
 
-      .stat-bullet {
-        width: 22px;
-        height: 22px;
+      .mini-stat-icon {
+        width: 20px;
+        height: 20px;
         border-radius: 50%;
-        background: rgba(47,110,245,0.12);
+        background: rgba(59,130,246,0.15);
         color: var(--blue);
-        font-weight: 800;
         display: flex;
-        justify-content: center;
         align-items: center;
-        font-size: 14px;
-      }
-
-      .stat-label {
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .stat-value {
-        font-size: clamp(22px, 1.8vw, 36px);
+        justify-content: center;
         font-weight: 800;
       }
 
-      .cta {
-        margin-top: 18px;
+      .mini-stat-label {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .mini-stat-value {
+        font-size: clamp(18px, 2vw, 30px);
+        font-weight: 800;
+      }
+
+      .subject-cta {
         width: 100%;
+        margin-top: 18px;
+        padding: 18px 20px;
         border: none;
+        border-radius: 14px;
         background: linear-gradient(135deg, var(--blue), var(--blue-2));
         color: white;
-        border-radius: 16px;
-        padding: 18px 20px;
-        font-size: clamp(22px, 2vw, 30px);
+        font-size: clamp(20px, 2vw, 28px);
         font-weight: 800;
         cursor: pointer;
+        box-shadow: 0 12px 30px rgba(59,130,246,0.3);
+      }
+
+      .subject-page {
+        background: rgba(2, 13, 29, 0.96);
+        min-height: calc(100vh - 72px);
+        border: 1px solid var(--line);
+        border-radius: 0 0 18px 18px;
+        padding: 0 18px 26px;
+      }
+
+      .subject-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        padding: 8px 0 12px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .subject-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .subject-pill {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--blue), var(--blue-2));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+      }
+
+      .subject-name {
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .subject-meta {
+        font-size: 12px;
+        color: var(--muted);
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 10px;
+      }
+
+      .toolbar-tabs {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .tab-btn {
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 10px 14px;
+        color: var(--muted);
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .tab-btn.active {
+        background: rgba(59,130,246,0.12);
+        border-color: rgba(96,165,250,0.45);
+        color: #dfeeff;
+      }
+
+      .content-body {
+        margin-top: 20px;
+      }
+
+      .chapter-panel {
+        background: rgba(17,29,49,0.9);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 16px;
+        margin-bottom: 18px;
+      }
+
+      .chapter-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chapter-tab {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px 14px;
+        min-width: 140px;
+        color: var(--muted);
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .chapter-tab.active {
+        background: rgba(59,130,246,0.18);
+        border-color: rgba(96,165,250,0.42);
+        color: #dfeeff;
+      }
+
+      .chapter-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 18px;
+        padding: 2px 2px 12px;
+      }
+
+      .chapter-label {
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .chapter-label strong {
+        color: var(--text);
+        font-size: 18px;
+      }
+
+      .progress-pill {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 6px 12px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .question-panel {
+        background: rgba(17,29,49,0.9);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 18px;
+        margin-top: 18px;
+      }
+
+      .question-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding-bottom: 12px;
+        color: var(--muted);
+      }
+
+      .question-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .question-badge {
+        width: 32px;
+        height: 32px;
+        border-radius: 10px;
+        background: rgba(59,130,246,0.18);
+        color: #dfeeff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+      }
+
+      .question-ask {
+        margin-top: 18px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255,255,255,0.02);
+        padding: 18px 16px;
+      }
+
+      .question-ask h3 {
+        margin: 0 0 16px;
+        font-size: clamp(24px, 3vw, 40px);
+        line-height: 1.5;
+        letter-spacing: -0.04em;
+      }
+
+      .answer {
+        display: block;
+        width: 100%;
+        background: rgba(255,255,255,0.03);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        margin: 8px 0;
+        padding: 14px 16px;
+        color: var(--text);
+        font-size: 18px;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .answer.correct {
+        background: rgba(34,197,94,0.12);
+        border-color: rgba(34,197,94,0.42);
+      }
+
+      .answer.wrong {
+        background: rgba(239,68,68,0.12);
+        border-color: rgba(239,68,68,0.4);
+      }
+
+      .result-box {
+        margin-top: 16px;
+        display: none;
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.04);
+      }
+
+      .result-box.show {
+        display: block;
+      }
+
+      .exam-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 500px;
+        padding: 20px;
+      }
+
+      .exam-card {
+        width: min(760px, 100%);
+        background: rgba(17,29,49,0.9);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 30px 24px;
+        box-shadow: var(--shadow);
+        text-align: center;
+      }
+
+      .exam-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+        background: rgba(59,130,246,0.15);
+        border: 1px solid rgba(96,165,250,0.35);
+        margin: 0 auto 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 30px;
+      }
+
+      .exam-card h2 {
+        margin: 0 0 16px;
+        font-size: clamp(30px, 3vw, 48px);
+        letter-spacing: -0.05em;
+      }
+
+      .exam-card p {
+        margin: 0 0 20px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.7;
+      }
+
+      .exam-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(180px, 1fr));
+        gap: 12px;
+        margin: 18px 0 20px;
+      }
+
+      .exam-grid .mini-box {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px 10px;
+        color: var(--muted);
+      }
+
+      .exam-grid .mini-box strong {
+        display: block;
+        color: var(--text);
+        margin-bottom: 6px;
+      }
+
+      .summary-box {
+        margin-top: 18px;
+        background: rgba(34,197,94,0.08);
+        border: 1px solid rgba(34,197,94,0.35);
+        border-radius: 18px;
+        padding: 18px;
+      }
+
+      .summary-box h3 {
+        margin: 0 0 8px;
+        font-size: 28px;
+      }
+
+      .summary-box p {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 700;
       }
 
       @media (max-width: 900px) {
         body {
-          padding: 18px;
+          padding: 14px;
+        }
+
+        .subject-grid {
+          grid-template-columns: 1fr;
         }
 
         .topbar {
+          padding: 12px 14px;
+          height: auto;
           flex-direction: column;
           align-items: flex-start;
         }
 
-        .brand-main {
-          font-size: 32px;
-        }
-
-        .card-grid {
-          grid-template-columns: 1fr;
+        .toolbar-tabs {
+          width: 100%;
+          justify-content: flex-start;
         }
       }
     </style>
   </head>
   <body>
-    <div class="page">
-      <div class="shell">
-        <header class="topbar">
-          <div class="brand">
-            <div class="logo">S</div>
+    <div class="app">
+      <div id="homeScreen" class="screen active">
+        <div class="topbar">
+          <div class="brand-wrap">
+            <div class="brand-mark">S</div>
             <div>
-              <div class="brand-main">Student Portal</div>
+              <div class="brand-title">Student Portal</div>
               <div class="brand-sub">Learning Dashboard</div>
             </div>
           </div>
 
-          <div class="top-actions">
-            <button class="pill">Học tập</button>
-            <button class="pill">Bài kiểm tra</button>
+          <div class="topbar-right">
+            <div class="chip">Học tập</div>
+            <div class="chip">Bài kiểm tra</div>
           </div>
-        </header>
+        </div>
 
-        <main class="main">
-          <h2 class="section-title">Các môn học</h2>
+        <div class="home-panel">
+          <div class="hero">
+            <div class="hero-pill">✦ Nền tảng ôn thi mạnh mẽ và tiện ích</div>
+            <h1>Chọn Môn Học Cần Ôn Tập</h1>
+            <p>
+              Hệ thống học tập 2 cột thông minh với ngân hàng câu hỏi chuẩn hóa,
+              giúp bạn ôn tập hiệu quả và nắm vững kiến thức tương ứng.
+            </p>
+          </div>
 
-          <div id="subjectGrid" class="card-grid"></div>
-        </main>
+          <div id="subjectGrid" class="subject-grid"></div>
+        </div>
+      </div>
+
+      <div id="subjectScreen" class="screen">
+        <div class="topbar">
+          <div class="subject-brand">
+            <div class="subject-pill"></div>
+            <div>
+              <div id="subjectName" class="subject-name"></div>
+              <div id="subjectMeta" class="subject-meta"></div>
+            </div>
+          </div>
+
+          <div id="toolbarTabs" class="toolbar-tabs"></div>
+        </div>
+
+        <div class="subject-page">
+          <div class="content-body" id="subjectContent"></div>
+        </div>
       </div>
     </div>
 
     <script>
       const subjects = [
         {
-          id: "math",
+          id: "phap-luat",
           name: "Pháp Luật Đại Cương",
           badge: "HCMUTE 2023 • 298 Trang",
+          short: "PL",
           description: "Nắm vững bản chất Nhà nước & Pháp luật, các ngành luật cơ bản (Dân sự, Hình sự, Lao động, Hôn nhân và Gia đình) và Luật Phòng chống tham nhũng.",
           stats: [
             { label: "Ngân hàng câu hỏi", value: "195 câu MCQ" },
@@ -301,86 +667,312 @@
             { label: "Thi thử chuẩn", value: "40 câu / 60 phút" },
             { label: "Chương giáo trình", value: "7 chương" }
           ],
-          icon: "B"
+          chapters: [
+            { label: "Chương 1", title: "Tổng quan về Nhà nước & Pháp luật", total: 25 },
+            { label: "Chương 2", title: "Quyền con người", total: 30 },
+            { label: "Chương 3", title: "Luật dân sự", total: 35 },
+            { label: "Chương 4", title: "Luật hình sự", total: 40 },
+            { label: "Chương 5", title: "Luật lao động", total: 30 },
+            { label: "Chương 6", title: "Luật hôn nhân và gia đình", total: 35 },
+            { label: "Chương 7", title: "Luật phòng chống tham nhũng", total: 25 }
+          ],
+          questions: [
+            {
+              id: "PL-01",
+              prompt: "Nhà nước có các chức năng nào?",
+              choices: [
+                { text: "Chức năng lập pháp, hành pháp, tư pháp", correct: true },
+                { text: "Chức năng sản xuất, kinh doanh, thương mại", correct: false },
+                { text: "Chức năng nghiên cứu, phát triển, giáo dục", correct: false },
+                { text: "Chức năng bảo vệ môi trường duy nhất", correct: false }
+              ]
+            },
+            {
+              id: "PL-02",
+              prompt: "Quyền con người được hiểu là?",
+              choices: [
+                { text: "Những quyền cơ bản của con người do pháp luật công nhận", correct: true },
+                { text: "Quyền chỉ dành cho cán bộ nhà nước", correct: false },
+                { text: "Quyền thuộc về doanh nghiệp", correct: false },
+                { text: "Quyền được miễn thuế", correct: false }
+              ]
+            }
+          ]
         },
         {
-          id: "cplus",
-          name: "Lập trình C/C++",
-          badge: "Mới ra mắt • 9 Chương",
-          description: "Giải thích chương trình UTT & UIT, C/C++, cấu trúc dữ liệu, hướng đối tượng và môi trường lập trình.",
+          id: "c-lang",
+          name: "Lập trình C & C++",
+          badge: "HCMUTE 2023",
+          short: "C",
+          description: "Hệ thống ôn tập trọng tâm cho ngôn ngữ C/C++ với chương trình UTT và HCMUTE.",
           stats: [
             { label: "Ngân hàng câu hỏi", value: "270 câu MCQ" },
             { label: "Thẻ nhớ flashcards", value: "125 thẻ" },
             { label: "Thi thử chuẩn", value: "45 câu / 90 phút" },
             { label: "Chương giáo trình", value: "9 chương" }
           ],
-          icon: "</>"
-        },
-        {
-          id: "database",
-          name: "Cơ sở dữ liệu",
-          badge: "Mới ra mắt • 8 Chương",
-          description: "Xây dựng nền tảng dữ liệu, mô hình quan hệ, SQL và quy trình quản lý dữ liệu hiệu quả.",
-          stats: [
-            { label: "Ngân hàng câu hỏi", value: "220 câu MCQ" },
-            { label: "Thẻ nhớ flashcards", value: "90 thẻ" },
-            { label: "Thi thử chuẩn", value: "38 câu / 60 phút" },
-            { label: "Chương giáo trình", value: "8 chương" }
+          chapters: [
+            { label: "Chương 1", title: "Tổng quan về Ngôn ngữ C & Môi trường lập trình", total: 25 },
+            { label: "Chương 2", title: "Kiểu dữ liệu cơ bản", total: 30 },
+            { label: "Chương 3", title: "Câu lệnh điều kiện", total: 35 },
+            { label: "Chương 4", title: "Vòng lặp", total: 40 },
+            { label: "Chương 5", title: "Mảng", total: 30 },
+            { label: "Chương 6", title: "Hàm", total: 35 },
+            { label: "Chương 7", title: "Con trỏ", total: 25 },
+            { label: "Chương 8", title: "Cấu trúc", total: 20 },
+            { label: "Chương 9", title: "Tệp tin", total: 20 }
           ],
-          icon: "DB"
-        },
-        {
-          id: "network",
-          name: "Mạng máy tính",
-          badge: "Mới ra mắt • 6 Chương",
-          description: "Nền tảng mạng, giao thức, mô hình OSI và các nguyên tắc vận hành hệ thống mạng.",
-          stats: [
-            { label: "Ngân hàng câu hỏi", value: "180 câu MCQ" },
-            { label: "Thẻ nhớ flashcards", value: "80 thẻ" },
-            { label: "Thi thử chuẩn", value: "32 câu / 60 phút" },
-            { label: "Chương giáo trình", value: "6 chương" }
-          ],
-          icon: "NET"
+          questions: [
+            {
+              id: "C-01",
+              prompt: "Đặc điểm nào dưới đây là đúng về ngôn ngữ C?",
+              choices: [
+                { text: "C là ngôn ngữ hướng đối tượng thuần túy", correct: false },
+                { text: "C là ngôn ngữ lập trình bậc trung, mạnh và hiệu quả", correct: true },
+                { text: "C không hỗ trợ cấu trúc dữ liệu", correct: false },
+                { text: "C chỉ dùng cho web", correct: false }
+              ]
+            },
+            {
+              id: "C-02",
+              prompt: "Phần đầu của chương trình C thường chứa gì?",
+              choices: [
+                { text: "Câu lệnh điều kiện", correct: false },
+                { text: "Thư viện và khai báo", correct: true },
+                { text: "Hàm render", correct: false },
+                { text: "HTML", correct: false }
+              ]
+            }
+          ]
         }
       ];
 
-      const grid = document.getElementById("subjectGrid");
+      const homeScreen = document.getElementById("homeScreen");
+      const subjectScreen = document.getElementById("subjectScreen");
+      const subjectGrid = document.getElementById("subjectGrid");
+      const toolbarTabs = document.getElementById("toolbarTabs");
+      const subjectName = document.getElementById("subjectName");
+      const subjectMeta = document.getElementById("subjectMeta");
+      const subjectContent = document.getElementById("subjectContent");
+      const subjectPill = document.querySelector(".subject-pill");
 
-      function renderSubjects() {
-        grid.innerHTML = "";
+      let activeSubject = null;
+      let activeTab = "Luyện tập";
+
+      function renderHome() {
+        subjectGrid.innerHTML = "";
 
         subjects.forEach((subject) => {
           const card = document.createElement("div");
           card.className = "subject-card";
+          const first = subject.short || subject.name.charAt(0).toUpperCase();
 
           card.innerHTML = `
             <div class="subject-head">
-              <div class="subject-icon">${subject.icon}</div>
+              <div class="subject-icon">${first}</div>
               <div class="subject-badge">${subject.badge}</div>
             </div>
 
-            <h3 class="subject-name">${subject.name}</h3>
-            <p class="subject-desc">${subject.description}</p>
+            <div class="subject-title">${subject.name}</div>
+            <div class="subject-desc">${subject.description}</div>
 
-            <div class="stats">
-              ${subject.stats.map(stat => `
-                <div class="stat-box">
-                  <div class="stat-row">
-                    <div class="stat-bullet">${stat.label.charAt(0)}</div>
-                    <div class="stat-label">${stat.label}</div>
+            <div class="stats-grid">
+              ${subject.stats.slice(0,2).map(stat => `
+                <div class="mini-stat">
+                  <div class="mini-stat-row">
+                    <div class="mini-stat-icon">${stat.label.charAt(0)}</div>
+                    <div class="mini-stat-label">${stat.label}</div>
                   </div>
-                  <div class="stat-value">${stat.value}</div>
+                  <div class="mini-stat-value">${stat.value}</div>
                 </div>
               `).join("")}
             </div>
 
-            <button class="cta">Vào ôn tập ${subject.name}</button>
+            <button class="subject-cta">Vào ôn tập ${subject.name}</button>
           `;
-          grid.appendChild(card);
+
+          card.addEventListener("click", () => showSubject(subject.id));
+          subjectGrid.appendChild(card);
         });
       }
 
-      renderSubjects();
+      function showSubject(subjectId) {
+        activeSubject = subjects.find(s => s.id === subjectId);
+        if (!activeSubject) return;
+
+        homeScreen.classList.remove("active");
+        subjectScreen.classList.add("active");
+
+        subjectPill.textContent = activeSubject.short || activeSubject.name.charAt(0).toUpperCase();
+        subjectName.textContent = activeSubject.name;
+        subjectMeta.textContent = activeSubject.badge;
+
+        renderTabs();
+        renderSubjectContent();
+      }
+
+      function renderTabs() {
+        toolbarTabs.innerHTML = "";
+        const tabs = ["Luyện tập", "Thi thử", "Thẻ nhớ", "Tự luận"];
+
+        tabs.forEach((tab) => {
+          const btn = document.createElement("button");
+          btn.className = "tab-btn " + (tab === activeTab ? "active" : "");
+          btn.textContent = tab;
+          btn.addEventListener("click", () => {
+            activeTab = tab;
+            renderTabs();
+            renderSubjectContent();
+          });
+          toolbarTabs.appendChild(btn);
+        });
+      }
+
+      function renderSubjectContent() {
+        if (!activeSubject) return;
+
+        if (activeTab === "Luyện tập") {
+          renderPractice();
+        } else if (activeTab === "Thi thử") {
+          renderExam();
+        } else if (activeTab === "Thẻ nhớ") {
+          renderFlashcard();
+        } else {
+          renderEssay();
+        }
+      }
+
+      function renderPractice() {
+        const subject = activeSubject;
+        const chapter = subject.chapters[0];
+        const question = subject.questions[0];
+
+        const chapterTabs = subject.chapters.map((ch, index) => {
+          return `<button class="chapter-tab ${index === 0 ? "active" : ""}">${ch.label}</button>`;
+        }).join("");
+
+        const answers = question.choices.map((choice) => {
+          return `<button class="answer" data-correct="${choice.correct}">${choice.text}</button>`;
+        }).join("");
+
+        subjectContent.innerHTML = `
+          <div class="chapter-panel">
+            <div class="chapter-tabs">${chapterTabs}</div>
+            <div class="chapter-header">
+              <div class="chapter-label">
+                <strong>${chapter.label}</strong><br>
+                ${chapter.title}
+              </div>
+              <div class="progress-pill">0/25 câu</div>
+            </div>
+          </div>
+
+          <div class="question-panel">
+            <div class="question-toolbar">
+              <div class="question-left">
+                <span class="question-badge">1</span>
+                <span>${question.id}</span>
+              </div>
+              <div class="question-left">
+                <span>Đề</span>
+              </div>
+            </div>
+
+            <div class="question-ask">
+              <h3>${question.prompt}</h3>
+              ${answers}
+              <div class="result-box" id="resultBox"></div>
+            </div>
+          </div>
+        `;
+
+        const answerButtons = document.querySelectorAll(".answer");
+        const resultBox = document.getElementById("resultBox");
+
+        answerButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const isCorrect = btn.dataset.correct === "true";
+            answerButtons.forEach(el => {
+              el.classList.remove("correct","wrong");
+              el.disabled = true;
+            });
+
+            const correctBtn = Array.from(answerButtons).find(el => el.dataset.correct === "true");
+            if (correctBtn) {
+              correctBtn.classList.add("correct");
+            }
+
+            btn.classList.add(isCorrect ? "correct" : "wrong");
+            resultBox.classList.add("show");
+            resultBox.textContent = isCorrect
+              ? "Đúng rồi! Bạn chọn đáp án chính xác."
+              : "Sai rồi! Đáp án đúng là: " + correctBtn.textContent.trim();
+          });
+        });
+      }
+
+      function renderExam() {
+        subjectContent.innerHTML = `
+          <div class="exam-box">
+            <div class="exam-card">
+              <div class="exam-icon">🎓</div>
+              <h2>Đề Thi Thử Chuẩn Lập Trình C/C++ (HCMUTE)</h2>
+              <p>Mô phỏng 100% hình thức thi kết thúc học phần: 45 câu trắc nghiệm • Thời gian làm bài 90 phút</p>
+
+              <div class="exam-grid">
+                <div class="mini-box"><strong>Đề chuẩn tuyển chọn</strong>45 câu hỏi tiêu biểu</div>
+                <div class="mini-box"><strong>Khuynh hướng</strong>Tăng dần</div>
+                <div class="mini-box"><strong>Chương 1</strong>3 câu</div>
+                <div class="mini-box"><strong>Chương 2</strong>5 câu</div>
+                <div class="mini-box"><strong>Chương 3</strong>6 câu</div>
+                <div class="mini-box"><strong>Chương 4</strong>5 câu</div>
+                <div class="mini-box"><strong>Chương 5</strong>6 câu</div>
+                <div class="mini-box"><strong>Chương 6</strong>8 câu</div>
+                <div class="mini-box"><strong>Chương 7</strong>5 câu</div>
+                <div class="mini-box"><strong>Chương 8</strong>4 câu</div>
+                <div class="mini-box"><strong>Chương 9</strong>3 câu</div>
+                <div class="mini-box"><strong>Chương 10</strong>4 câu</div>
+              </div>
+
+              <button style="width:100%;background:linear-gradient(135deg,#3b82f6,#5b8ef7);color:white;border:none;border-radius:12px;padding:20px;font-weight:800;font-size:30px;cursor:pointer;">
+                Bắt đầu làm bài thi ngay →
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderFlashcard() {
+        subjectContent.innerHTML = `
+          <div style="padding:20px 0;">
+            <div style="display:grid;grid-template-columns:repeat(2,minmax(260px,1fr));gap:18px;">
+              <div style="background:rgba(17,29,49,0.9);border:1px solid var(--line);border-radius:18px;padding:18px;">
+                <div style="font-size:18px;color:var(--muted);margin-bottom:8px;">Khái niệm</div>
+                <div style="font-size:30px;font-weight:800;">Con trỏ là gì?</div>
+              </div>
+              <div style="background:rgba(17,29,49,0.9);border:1px solid var(--line);border-radius:18px;padding:18px;">
+                <div style="font-size:18px;color:var(--muted);margin-bottom:8px;">Định nghĩa</div>
+                <div style="font-size:20px;line-height:1.7;">Con trỏ là biến lưu địa chỉ của biến khác, cho phép truy cập và thao tác dữ liệu trực tiếp trong bộ nhớ.</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderEssay() {
+        subjectContent.innerHTML = `
+          <div style="padding:20px 0;">
+            <div style="background:rgba(17,29,49,0.9);border:1px solid var(--line);border-radius:18px;padding:18px;">
+              <div style="font-size:18px;color:var(--muted);margin-bottom:10px;">Bài 1.1</div>
+              <div style="font-size:30px;font-weight:800;line-height:1.5;">
+                Trình bày khái niệm ngôn ngữ C và ưu điểm của nó trong lập trình hệ thống.
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      renderHome();
     </script>
   </body>
 </html>
