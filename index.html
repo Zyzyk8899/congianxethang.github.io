@@ -3,655 +3,241 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Student Learning Dashboard</title>
+    <title>Student Portal</title>
     <style>
       :root {
-        --bg: #f4f7fb;
-        --panel: #ffffff;
-        --panel-soft: #eef4ff;
-        --primary: #3164f4;
-        --primary-dark: #1d4ed8;
-        --primary-soft: #dbeafe;
-        --success: #22c55e;
-        --success-soft: #dcfce7;
-        --danger: #ef4444;
-        --danger-soft: #fee2e2;
-        --text: #10213b;
-        --muted: #53657f;
-        --line: #dfe8f3;
-        --shadow: 0 14px 30px rgba(17, 24, 39, 0.08);
+        --bg: #edf3fa;
+        --surface: #f4f7fb;
+        --panel: rgba(255,255,255,0.8);
+        --card: #f5f7fa;
+        --line: #dfeaf4;
+        --text: #1d2b3a;
+        --muted: #5f6f84;
+        --blue: #2c6df5;
+        --blue-dark: #1d5fe4;
+        --blue-soft: #eaf1ff;
+        --shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
       }
 
       * { box-sizing: border-box; }
 
       body {
         margin: 0;
-        background: linear-gradient(180deg, #eef4ff 0%, #f8fafc 100%);
+        background: var(--bg);
         color: var(--text);
         font-family: "Segoe UI", Arial, sans-serif;
       }
 
-      .app {
-        max-width: 1280px;
-        margin: 30px auto;
-        padding: 0 20px 40px;
+      .page {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 26px 28px 60px;
+      }
+
+      .portal-shell {
+        background: rgba(255,255,255,0.35);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        padding: 18px 18px 10px;
+        box-shadow: var(--shadow);
       }
 
       .topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
-        background: rgba(255,255,255,0.85);
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 16px 20px;
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(6px);
+        padding: 8px 8px 18px;
+        gap: 20px;
       }
 
       .brand {
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 18px;
       }
 
       .brand-badge {
-        width: 42px;
-        height: 42px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, var(--primary), #60a5fa);
-        color: white;
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--blue), #5e8cff);
         display: flex;
         align-items: center;
         justify-content: center;
+        box-shadow: 0 10px 20px rgba(44,109,245,0.25);
+        color: white;
         font-weight: 800;
+        font-size: 28px;
       }
 
-      .brand h2 {
-        margin: 0;
-        font-size: 22px;
+      .brand-text {
+        line-height: 1.1;
       }
 
-      .brand small {
-        display: block;
+      .brand-title {
+        font-size: clamp(28px, 3vw, 52px);
+        font-weight: 800;
+        letter-spacing: -0.05em;
+      }
+
+      .brand-sub {
+        margin-top: 6px;
+        font-size: clamp(18px, 1.8vw, 28px);
         color: var(--muted);
-        margin-top: 2px;
+        font-weight: 500;
       }
 
-      .header-actions {
+      .top-actions {
         display: flex;
-        align-items: center;
-        gap: 10px;
+        gap: 12px;
         flex-wrap: wrap;
       }
 
-      .pill {
-        background: var(--panel);
-        border: 1px solid var(--line);
+      .action-btn {
+        background: rgba(255,255,255,0.35);
+        border: 1px solid rgba(148, 163, 184, 0.4);
         border-radius: 999px;
-        padding: 8px 12px;
-        font-weight: 700;
-        color: var(--muted);
-        font-size: 12px;
-      }
-
-      .dashboard {
-        margin-top: 22px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 16px;
-      }
-
-      .stat-card {
-        background: var(--panel);
-        border-radius: 18px;
-        border: 1px solid var(--line);
-        padding: 20px 18px;
-        box-shadow: var(--shadow);
-      }
-
-      .stat-card .label {
-        color: var(--muted);
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .stat-card .value {
-        margin-top: 8px;
-        font-size: 32px;
-        font-weight: 800;
+        padding: 12px 20px;
+        font-size: 18px;
+        color: #2f4056;
+        font-weight: 600;
+        cursor: pointer;
       }
 
       .section-title {
-        margin: 28px 0 12px 0;
-        font-size: 22px;
+        font-size: clamp(28px, 3vw, 46px);
         font-weight: 800;
+        letter-spacing: -0.04em;
+        margin: 18px 0 0 0;
+        padding-left: 8px;
       }
 
       .subject-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         gap: 18px;
+        margin-top: 18px;
       }
 
       .subject-card {
-        background: var(--panel);
+        background: rgba(255,255,255,0.45);
         border: 1px solid var(--line);
         border-radius: 18px;
-        padding: 20px;
-        cursor: pointer;
+        padding: 18px 18px 16px;
         box-shadow: var(--shadow);
+        min-height: 180px;
         transition: 0.2s ease;
       }
 
       .subject-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 36px rgba(49, 100, 244, 0.12);
+        transform: translateY(-2px);
       }
 
-      .subject-card-header {
+      .subject-card .card-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 12px;
+        margin-bottom: 8px;
       }
 
-      .subject-icon {
-        width: 40px;
-        height: 40px;
+      .card-icon {
+        width: 46px;
+        height: 46px;
         border-radius: 12px;
-        background: linear-gradient(135deg, var(--primary-soft), #eff6ff);
-        color: var(--primary-dark);
+        background: linear-gradient(135deg, var(--blue-soft), #edf4ff);
+        color: var(--blue);
         display: flex;
         align-items: center;
         justify-content: center;
         font-weight: 800;
+        font-size: 22px;
       }
 
       .subject-card h3 {
-        margin: 0 0 8px 0;
-        font-size: 22px;
+        font-size: 26px;
+        line-height: 1.2;
+        margin: 12px 0 10px;
       }
 
       .subject-card p {
         margin: 0;
         color: var(--muted);
         line-height: 1.6;
+        font-size: 16px;
       }
 
-      .progress {
-        margin-top: 14px;
-        background: var(--panel-soft);
-        border: 1px solid #dbeafe;
+      .card-progress {
+        margin-top: 16px;
+        background: rgba(255,255,255,0.35);
+        border: 1px solid var(--line);
         border-radius: 12px;
         padding: 10px 12px;
-        color: var(--primary-dark);
-        font-size: 13px;
-        font-weight: 700;
-      }
-
-      .quiz-screen {
-        display: none;
-      }
-
-      .quiz-screen.active {
-        display: block;
-      }
-
-      .quiz-topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        margin: 24px 0 16px 0;
-        flex-wrap: wrap;
-      }
-
-      .back-btn, .reset-btn {
-        border: none;
-        border-radius: 12px;
-        padding: 12px 16px;
-        font-weight: 700;
-        cursor: pointer;
-      }
-
-      .back-btn {
-        background: white;
-        border: 1px solid var(--line);
-        color: var(--text);
-      }
-
-      .reset-btn {
-        background: var(--primary-soft);
-        color: var(--primary-dark);
-        border: 1px solid #bfdbfe;
-      }
-
-      .subject-tabs {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 18px;
-      }
-
-      .subject-tab {
-        background: white;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        padding: 10px 16px;
-        cursor: pointer;
+        font-size: 14px;
         font-weight: 700;
         color: var(--muted);
       }
 
-      .subject-tab.active {
-        background: var(--primary-soft);
-        color: var(--primary-dark);
-        border-color: #bfdbfe;
-      }
-
-      .subject-header {
-        font-size: clamp(24px, 3vw, 30px);
-        font-weight: 800;
-        margin-bottom: 20px;
-      }
-
-      .question-box {
-        background: white;
-        border: 1px solid var(--line);
-        border-radius: 18px;
-        padding: 20px;
-        margin-bottom: 22px;
-        box-shadow: var(--shadow);
-      }
-
-      .question {
-        font-size: 20px;
-        font-weight: 700;
-        margin-bottom: 18px;
-      }
-
-      .answers {
-        display: grid;
-        gap: 12px;
-      }
-
-      .answer {
-        width: 100%;
-        text-align: left;
-        border: 1px solid var(--line);
-        border-radius: 12px;
-        background: #f8fafc;
-        padding: 14px 16px;
-        cursor: pointer;
-        font-size: 16px;
-        color: var(--text);
-        transition: 0.2s ease;
-      }
-
-      .answer:hover {
-        border-color: #93c5fd;
-        background: #eff6ff;
-      }
-
-      .answer.correct {
-        background: var(--success-soft);
-        border-color: #86efac;
-        color: #166534;
-      }
-
-      .answer.wrong {
-        background: var(--danger-soft);
-        border-color: #fca5a5;
-        color: #991b1b;
-      }
-
-      .result {
-        display: none;
-        margin-top: 16px;
-        padding: 12px 14px;
-        border-radius: 12px;
-        font-weight: 700;
-        border: 1px solid var(--line);
-      }
-
-      .result.show {
-        display: block;
-      }
-
-      .summary-box {
-        display: none;
-        border-radius: 18px;
-        padding: 18px 20px;
-        margin-top: 20px;
-        background: linear-gradient(135deg, #ecfdf5, #f8fafc);
-        border: 1px solid #86efac;
-      }
-
-      .summary-box.show {
-        display: block;
-      }
-
-      .summary-box h3 {
-        margin: 0 0 10px 0;
-        font-size: 24px;
-      }
-
-      .summary-box p {
-        margin: 0;
-        font-size: 18px;
-        font-weight: 700;
-      }
-
-      @media (max-width: 700px) {
-        .header h1 { font-size: 26px; }
-        .question { font-size: 18px; }
+      @media (max-width: 900px) {
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .subject-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
   <body>
-    <div class="app">
-      <div id="homeScreen">
+    <div class="page">
+      <div class="portal-shell">
         <div class="topbar">
           <div class="brand">
             <div class="brand-badge">S</div>
-            <div>
-              <h2>Student Portal</h2>
-              <small>Learning Dashboard</small>
+            <div class="brand-text">
+              <div class="brand-title">Student Portal</div>
+              <div class="brand-sub">Learning Dashboard</div>
             </div>
           </div>
 
-          <div class="header-actions">
-            <div class="pill">Học tập</div>
-            <div class="pill">Bài kiểm tra</div>
+          <div class="top-actions">
+            <button class="action-btn">Học tập</button>
+            <button class="action-btn">Bài kiểm tra</button>
           </div>
         </div>
 
-        <div class="dashboard" id="summaryStrip"></div>
-
         <div class="section-title">Các môn học</div>
+
         <div id="subjectGrid" class="subject-grid"></div>
-      </div>
-
-      <div id="quizScreen" class="quiz-screen">
-        <div class="quiz-topbar">
-          <button id="backBtn" class="back-btn">← Quay lại</button>
-          <button id="resetBtn" class="reset-btn">Làm lại</button>
-        </div>
-
-        <div id="subjectTabs" class="subject-tabs"></div>
-
-        <div id="subjectHeader" class="subject-header"></div>
-
-        <div id="questionsContainer"></div>
-
-        <div id="summaryBox" class="summary-box"></div>
       </div>
     </div>
 
     <script src="questions.js"></script>
     <script>
-      const STORAGE_KEY = "student-dashboard-state-v2";
-
-      let currentSubjectIndex = 0;
-
-      const homeScreen = document.getElementById("homeScreen");
-      const quizScreen = document.getElementById("quizScreen");
       const subjectGrid = document.getElementById("subjectGrid");
-      const summaryStrip = document.getElementById("summaryStrip");
-      const subjectTabs = document.getElementById("subjectTabs");
-      const questionsContainer = document.getElementById("questionsContainer");
-      const subjectHeader = document.getElementById("subjectHeader");
-      const summaryBox = document.getElementById("summaryBox");
-      const backBtn = document.getElementById("backBtn");
-      const resetBtn = document.getElementById("resetBtn");
 
-      function loadState() {
-        try {
-          return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-        } catch {
-          return {};
-        }
-      }
-
-      function saveState() {
-        const state = {};
-        subjects.forEach(subject => {
-          const answered = subject.questions.filter(q => q._answered).length;
-          const correct = subject.questions.filter(q => q._selectedCorrect).length;
-          state[subject.id] = {
-            done: answered,
-            correct,
-            total: subject.questions.length
-          };
-        });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      }
-
-      function getSubjectProgress(subject) {
-        const saved = loadState()[subject.id] || {
-          done: 0,
-          correct: 0,
-          total: subject.questions.length
-        };
-        return {
-          done: Math.min(saved.done, subject.questions.length),
-          correct: Math.min(saved.correct, subject.questions.length),
-          total: subject.questions.length
-        };
-      }
-
-      function renderSummaryStrip() {
-        const all = subjects.map(subject => getSubjectProgress(subject));
-        const totalQuestions = all.reduce((acc, x) => acc + x.total, 0);
-        const totalDone = all.reduce((acc, x) => acc + x.done, 0);
-        const totalCorrect = all.reduce((acc, x) => acc + x.correct, 0);
-        const completion = totalQuestions ? Math.round((totalDone / totalQuestions) * 100) : 0;
-
-        summaryStrip.innerHTML = `
-          <div class="stat-card">
-            <div class="label">Tổng câu hỏi</div>
-            <div class="value">${totalQuestions}</div>
-          </div>
-          <div class="stat-card">
-            <div class="label">Đã làm</div>
-            <div class="value">${totalDone}</div>
-          </div>
-          <div class="stat-card">
-            <div class="label">Đúng</div>
-            <div class="value">${totalCorrect}</div>
-          </div>
-          <div class="stat-card">
-            <div class="label">Hoàn thành</div>
-            <div class="value">${completion}%</div>
-          </div>
-        `;
-      }
-
-      function renderSubjectCards() {
+      function renderSubjects() {
         subjectGrid.innerHTML = "";
-        subjects.forEach(subject => {
-          const prog = getSubjectProgress(subject);
+        subjects.forEach((subject) => {
           const card = document.createElement("div");
           card.className = "subject-card";
 
-          const initial = subject.name.charAt(0).toUpperCase();
+          const firstLetter = subject.name.charAt(0).toUpperCase();
 
           card.innerHTML = `
-            <div class="subject-card-header">
-              <div class="subject-icon">${initial}</div>
+            <div class="card-row">
+              <div class="card-icon">${firstLetter}</div>
             </div>
             <h3>${subject.name}</h3>
             <p>${subject.description}</p>
-            <div class="progress">
-              Tiến độ: ${prog.done}/${prog.total} • Đúng: ${prog.correct}
-            </div>
+            <div class="card-progress">Tiến độ: 0/1</div>
           `;
-
-          card.addEventListener("click", () => {
-            currentSubjectIndex = subjects.findIndex(s => s.id === subject.id);
-            renderQuizScreen();
-          });
 
           subjectGrid.appendChild(card);
         });
-
-        renderSummaryStrip();
       }
 
-      function renderSubjectTabs() {
-        subjectTabs.innerHTML = "";
-        subjects.forEach((subject, index) => {
-          const btn = document.createElement("button");
-          btn.className = "subject-tab " + (index === currentSubjectIndex ? "active" : "");
-          btn.textContent = subject.name;
-
-          btn.addEventListener("click", () => {
-            currentSubjectIndex = index;
-            renderQuizScreen();
-          });
-
-          subjectTabs.appendChild(btn);
-        });
-      }
-
-      function ensureSubjectState(subject) {
-        if (!subject.questions.every(q => q._answered !== undefined)) {
-          subject.questions.forEach(question => {
-            question._answered = false;
-            question._selectedCorrect = false;
-          });
-        }
-      }
-
-      function renderQuizScreen() {
-        const subject = subjects[currentSubjectIndex];
-
-        homeScreen.style.display = "none";
-        quizScreen.classList.add("active");
-
-        ensureSubjectState(subject);
-        renderSubjectTabs();
-        subjectHeader.textContent = subject.name;
-        questionsContainer.innerHTML = "";
-        summaryBox.classList.remove("show");
-        summaryBox.innerHTML = "";
-
-        subject.questions.forEach((question, qIndex) => {
-          const box = document.createElement("div");
-          box.className = "question-box";
-
-          const qText = document.createElement("div");
-          qText.className = "question";
-          qText.textContent = `${qIndex + 1}. ${question.question}`;
-          box.appendChild(qText);
-
-          const answersWrap = document.createElement("div");
-          answersWrap.className = "answers";
-
-          question.answers.forEach(answer => {
-            const btn = document.createElement("button");
-            btn.type = "button";
-            btn.className = "answer";
-            btn.textContent = answer.text;
-
-            if (question._answered && answer.correct) {
-              btn.classList.add("correct");
-            }
-
-            btn.addEventListener("click", () => {
-              if (question._answered) return;
-
-              question._answered = true;
-
-              const allAnswers = Array.from(btn.parentElement.querySelectorAll(".answer"));
-              const result = btn.parentElement.parentElement.querySelector(".result");
-
-              allAnswers.forEach(item => item.classList.remove("correct", "wrong"));
-
-              if (answer.correct) {
-                btn.classList.add("correct");
-                question._selectedCorrect = true;
-                result.textContent = "Đúng rồi! Bạn chọn đáp án chính xác.";
-                result.style.background = "#dcfce7";
-                result.style.borderColor = "#86efac";
-                result.style.color = "#166534";
-              } else {
-                btn.classList.add("wrong");
-
-                const correctAnswer = question.answers.find(a => a.correct);
-                allAnswers.forEach(item => {
-                  if (item.textContent.includes(correctAnswer.text.split(".")[1].trim())) {
-                    item.classList.add("correct");
-                  }
-                });
-
-                question._selectedCorrect = false;
-                result.textContent = "Sai rồi! Đáp án đúng là: " + correctAnswer.text;
-                result.style.background = "#fee2e2";
-                result.style.borderColor = "#fca5a5";
-                result.style.color = "#991b1b";
-              }
-
-              result.classList.add("show");
-              saveState();
-              renderSubjectCards();
-              checkIfFinished(subject);
-            });
-
-            answersWrap.appendChild(btn);
-          });
-
-          const result = document.createElement("div");
-          result.className = "result";
-          box.appendChild(answersWrap);
-          box.appendChild(result);
-
-          questionsContainer.appendChild(box);
-        });
-      }
-
-      function checkIfFinished(subject) {
-        const answeredCount = subject.questions.filter(q => q._answered).length;
-        const total = subject.questions.length;
-
-        if (answeredCount === total) {
-          const correctCount = subject.questions.filter(q => q._selectedCorrect).length;
-          const percent = Math.round((correctCount / total) * 100);
-
-          summaryBox.classList.add("show");
-          summaryBox.innerHTML = `
-            <h3>Kết quả</h3>
-            <p>Điểm: ${correctCount}/${total} (${percent}%)</p>
-          `;
-        } else {
-          summaryBox.classList.remove("show");
-          summaryBox.innerHTML = "";
-        }
-
-        saveState();
-      }
-
-      backBtn.addEventListener("click", () => {
-        quizScreen.classList.remove("active");
-        homeScreen.style.display = "block";
-      });
-
-      resetBtn.addEventListener("click", () => {
-        const subject = subjects[currentSubjectIndex];
-        subject.questions.forEach(question => {
-          question._answered = false;
-          question._selectedCorrect = false;
-        });
-        saveState();
-        renderQuizScreen();
-        renderSubjectCards();
-      });
-
-      renderSubjectCards();
+      renderSubjects();
     </script>
   </body>
 </html>
